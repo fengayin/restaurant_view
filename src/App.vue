@@ -41,7 +41,12 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  margin-top: 20px; 
+  margin-top: 20px;
+}
+.el-main{
+  position:fixed;
+  bottom: 50px;
+  width:100%;
 }
 .el-footer {
     background: dimgrey;

@@ -1,61 +1,161 @@
 <template>
-  <div class="table">
-    <el-row  >
-      <el-col :span="600">
-          <el-image 
-            style="width: 200px; height: 200px"
-            :src="url">
-          </el-image>
+  <div class="table" :data="tableList" >
+    <div v-for="(table,tableId) in tableList" :key="tableId"   >
+      <el-col :span="6" >
+        <el-card :body-style="{ padding: '5px' }">
+          <img class="img"
+              :src="url"
+              >
+          </img>
+          <div style="padding:20px">
+             <!-- <el-form  :model="queryParams">
+                <el-form-item label="餐桌Id:" hidden >
+                  <span >
+                    {{parseInt(table.tableId) }}
+                  </span>
+                </el-form-item>
+                <el-form-item  prop="tableNo" value="tableNo" >{{ table.tableNo }}</el-form-item>
+             </el-form> -->
+             <span>{{ table.tableNo }}</span>
+            <div class="bottom clearfix">
+              <el-button type="text"  @click="handleAddTable(table.tableId),dialogFormVisible= true " class="button" >点餐</el-button>
+            </div>
+          </div>
+        </el-card>
       </el-col>
-      <el-col :span="600">
-          <el-image 
-            style="width: 200px; height: 200px"
-            :src="url">
-          </el-image>
-      </el-col>
-      <el-col :span="600">
-          <el-image 
-            style="width: 200px; height: 200px"
-            :src="url">
-          </el-image>
-      </el-col> 
-    </el-row>
-    <el-row >
-      <el-col :span="7">
-          <el-image 
-            style="width: 200px; height: 200px"
-            :src="url">
-          </el-image>
-      </el-col>
-      <el-col :span="7">
-          <el-image 
-            style="width: 200px; height: 200px"
-            :src="url">
-          </el-image>
-      </el-col>
-      <el-col :span="7">
-          <el-image 
-            style="width: 200px; height: 200px"
-            :src="url">
-          </el-image>
-      </el-col> 
-    </el-row>
+    </div>
+    <el-dialog title="请选择" :visible.sync="dialogFormVisible" :modal-append-to-body='false'>
+      <el-form :model="tableOrderVo,queryParams"
+          ref="queryForm">
+        <el-form-item label="餐桌" prop="tableNo"  :label-width="formLabelWidth">
+          <span >{{queryParams.tableNo}}</span>
+        </el-form-item>
+        <el-form-item label="人数"  prop="customer_num" :label-width="formLabelWidth">
+          <el-select v-model="tableOrderVo.customer_num" placeholder="请选择人数">
+            <el-option 
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <!-- <el-form-item label="员工编号" prop= "staffId" :label-width="formLabelWidth">
+          <el-select v-model="tableOrderVo.staffId" placeholder="请选择员工编号">
+            <el-option
+                  v-for="(staff,staffId) in staffList"
+                  :key="staffId"
+                  :label="staff.staffName"
+                  :value="staff.staffId"
+                  @keyup.enter.native="handleAddTableVo"
+                >
+             </el-option>
+          </el-select>
+        </el-form-item> -->
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleAddTableVo">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
+import {listTable,findTable} from "../api/table";
+//import {listStaff} from "../api/staff";
+import {createOrder} from "../api/order";
   export default {
     data() {
       return {
-        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+         // 遮罩层
+        loading: false,
+        url: require("@/assets/not_use.png"),
+        tableList: [],
+        //staffList: undefined,
+        // 查询参数
+        queryParams: {
+          tableId: undefined,
+          tableName:undefined,
+          tableNo: undefined,
+        },
+        tableOrderVo: {
+          tableId: undefined,
+          customer_num: undefined,
+        },
+        
+        dialogFormVisible: false,
+        form: { },
+        formLabelWidth: '120px',
+        options: [{
+          value: 1,
+          label: 1
+        }, {
+          value: 2,
+          label: 2
+        }, {
+          value: 3,
+          label: 3
+        }, {
+          value: 4,
+          label: 4
+        }],
+        value: ''
       }
-    }
+      
+    },
+    created() {
+      this.getList();
+      // //查询所有staff赋值staffList
+      // listStaff().then((response) =>{
+      //     this.staffList = response.data;
+      // });
+      console.log(this.$data);
+    },
+    methods: {
+      /** 查询桌子列表 */
+      getList() {
+        this.loading = true;
+        listTable(this.tableList).then((response) => {
+          this.tableList = response.data;
+          this.loading = false;
+        });
+        
+        // listStaff(this.queryParams).then((response) => {
+        //   this.staffList = response.data;
+        //   this.loading = false;
+        // });
+        
+      },
+
+      handleAddTable(val){
+        this.tableOrderVo.tableId=parseInt(val);
+          findTable(this.tableOrderVo.tableId).then((response) => {
+          this.queryParams= response.data;
+        });
+        
+        },
+
+      handleAddTableVo(){
+        createOrder().then((response)=>{
+          this.tableOrderVo=response.data;
+        })  
+      },
+      
+    },
   }
 </script>
 <style>
+  .body{
+    text-align: center;
+    
+    }
   .table{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
+    margin:0 auto;
   }
+  .img{
+     width: 110px; 
+  }
+  /* .el-form-item{
+    margin:  0;
+  } */
 </style>

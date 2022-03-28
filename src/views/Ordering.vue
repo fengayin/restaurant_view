@@ -2,12 +2,23 @@
   <div class="table" :data="tableList" >
     <div v-for="(table,tableId) in tableList" :key="tableId"   >
       <el-col :span="6" >
-        <el-card :body-style="{ padding: '5px' }">
-          <img class="img"
-              :src="url"
+        <el-card shadow="never" :body-style="{  }">
+          <div v-if="table.tableId !== tableOrderVo.tableId" >
+            <img class="img"  
+              src="@/assets/not_use.png" 
               >
           </img>
-          <div style="padding:20px">
+          </div>
+          <div v-else-if="table.tableId === tableOrderVo.tableId">
+            <img class="img2" 
+              src="@/assets/in_use.png"
+              >
+            </img>
+          </div>
+          
+          
+          
+          <div >
              <!-- <el-form  :model="queryParams">
                 <el-form-item label="餐桌Id:" hidden >
                   <span >
@@ -54,7 +65,7 @@
         </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button @click="cancelhandleAddTableVo">取 消</el-button>
         <el-button type="primary" @click="handleAddTableVo">确 定</el-button>
       </div>
     </el-dialog>
@@ -69,7 +80,8 @@ import {createOrder} from "../api/order";
       return {
          // 遮罩层
         loading: false,
-        url: require("@/assets/not_use.png"),
+
+    
         tableList: [],
         //staffList: undefined,
         // 查询参数
@@ -82,7 +94,7 @@ import {createOrder} from "../api/order";
           tableId: undefined,
           customer_num: undefined,
         },
-        
+
         dialogFormVisible: false,
         form: { },
         formLabelWidth: '120px',
@@ -136,10 +148,17 @@ import {createOrder} from "../api/order";
         },
 
       handleAddTableVo(){
-        createOrder().then((response)=>{
-          this.tableOrderVo=response.data;
-        })  
+        // createOrder().then((response)=>{
+        //   this.tableOrderVo=response.data;
+        // })  
+        this.$router.push({name:'Menu',params:{}})
       },
+      cancelhandleAddTableVo(){
+        this.dialogFormVisible=false;
+        this.tableOrderVo.tableId=undefined;
+        this.tableOrderVo.customer_num=undefined;
+
+      }
       
     },
   }
@@ -152,8 +171,13 @@ import {createOrder} from "../api/order";
   .table{
     margin:0 auto;
   }
-  .img{
-     width: 110px; 
+  .img {
+     width: 100px; 
+     height: 100px;
+  }
+  .img2 {
+     width: 100px;
+     height: 100px; 
   }
   /* .el-form-item{
     margin:  0;

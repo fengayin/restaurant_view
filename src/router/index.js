@@ -13,6 +13,11 @@ const routes = [
     name: 'Ordering',
     component:() => import("../views/Ordering.vue"),
   },
+  {
+    path: '/menu',
+    name: 'Menu',
+    component:() => import("../views/Menu.vue"),
+  },
 ];
 
 const router = new VueRouter({

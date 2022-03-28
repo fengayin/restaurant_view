@@ -44,7 +44,7 @@ nav{
 }
 /*选中则发生一些变化*/
 .router-link-active{
-	background: rgba(238, 227, 227, 0.8);
+	background: rgba(117, 110, 110, 0.8);
 	color: #444;
 }
 </style>

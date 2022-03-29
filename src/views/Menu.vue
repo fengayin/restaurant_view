@@ -1,7 +1,32 @@
 <template>
     <div class="menu" >
         <el-container style="height:610px">
-            <el-aside width="300px">Aside</el-aside>
+            <el-aside width="300px">
+                <!-- <div :model="tableOrderVo,queryParams">
+                    <div style="border:1px solid #333;text-align: left; height:485px">
+                         <el-table
+                             :data="OrderItem" 
+                             style="width: 100%"
+                         >
+                            <el-table-column
+                                prop="foodNo"
+                                label="购物车"
+                                width="180">
+                            </el-table-column>
+                             
+                         </el-table>
+                    </div>
+                    <div style="border:1px solid #333;text-align: left; height:115px ">
+                        <span lable="桌号">桌号:{{queryParams.tableNo}}</span><br>
+                        <span>人数：</span>
+                        <el-input-number v-model="tableOrderVo.customer_num" size="mini" :min="1" :max="10" prop="tableOrderVo.customer_num" lable="customer_num"></el-input-number><br>
+                        <span>总数量：</span><br>
+                        <span>总金额：</span><br>
+                        <button>登记</button>
+                    </div>
+                    
+                </div> -->
+            </el-aside>
             <el-container>
                 <el-main >
                     <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -16,7 +41,7 @@
                                         <span>￥{{food.foodPrice}}</span><br>                  
                                         <div class="bottom clearfix">                    
                                                                 
-                                            <el-button type="text" class="button" >查看</el-button>                    
+                                            <el-button type="text" class="button">添加</el-button>                    
                                         </div>                
                                         </div>                
                                         </el-card>                
@@ -57,8 +82,8 @@
 </template>
 
 <script>
-import { listFood , getListByPage} from '../api/food'
-
+import { listFood , getListByPage} from '../api/food';
+import {findTable} from "../api/table";
 export default {
     data() {
       return {
@@ -67,7 +92,17 @@ export default {
         activeName: '1',
         foodList: [
             
-        ],        
+        ],
+        // tableOrderVo:{
+        //   tableId: undefined,
+        //   customer_num: undefined,
+        //   foodNo: undefined,
+        // },  
+        // queryParams: {
+        //   tableId: undefined,
+        //   tableName:undefined,
+        //   tableNo: undefined,
+        // },      
 		pageSize:0,
         pageNum:0,     
 		total:null,        
@@ -81,6 +116,8 @@ export default {
     },
     created() {
         this.getList();
+        this.getInfo();
+        console.log(this.$data);
     },
     methods: {
       /** 查询食物列表 */
@@ -90,10 +127,21 @@ export default {
             this.foodList = response.data;
             this.loading = false;
             });
-            this.getListByPage()
+            this.getListByPage();
+            
+        },
+        getInfo(){
+            // let list = this;
+            // list.tableOrder = this.$route.params.tableOrder;
+            // findTable(this.tableOrder.tableId).then((response) => {
+            // this.queryParams = response.data;
+            // });
         },
         handleClick(tab, event) {
             console.log(tab, event,this.$data);
+        },
+        addFoodOrder(foodNo){
+            
         },
         getListByPage(){
             getListByPage(this.query).then((response)=>{

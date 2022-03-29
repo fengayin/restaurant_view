@@ -121,7 +121,7 @@ import {createOrder} from "../api/order";
       // listStaff().then((response) =>{
       //     this.staffList = response.data;
       // });
-      console.log(this.$data);
+       console.log(this.$data);
     },
     methods: {
       /** 查询桌子列表 */
@@ -148,10 +148,13 @@ import {createOrder} from "../api/order";
         },
 
       handleAddTableVo(){
-        // createOrder().then((response)=>{
-        //   this.tableOrderVo=response.data;
-        // })  
-        this.$router.push({name:'Menu',params:{}})
+        createOrder(this.tableOrderVo.tableId,this.tableOrderVo.customer_num).then((response)=>{
+          // this.tableOrderVo=response.data;
+          this.tableOrderVo.tableId=response.data.tableId;
+          this.tableOrderVo.customer_num=response.data.customer_num;
+        })  
+       
+        his.$router.push({name:'Menu'})
       },
       cancelhandleAddTableVo(){
         this.dialogFormVisible=false;

@@ -2,10 +2,10 @@
     <div class="menu" >
         <el-container style="height:610px">
             <el-aside width="300px">
-                <!-- <div :model="tableOrderVo,queryParams">
+                <div :model="tableOrderVo,queryParams">
                     <div style="border:1px solid #333;text-align: left; height:485px">
                          <el-table
-                             :data="OrderItem" 
+                             
                              style="width: 100%"
                          >
                             <el-table-column
@@ -19,13 +19,13 @@
                     <div style="border:1px solid #333;text-align: left; height:115px ">
                         <span lable="桌号">桌号:{{queryParams.tableNo}}</span><br>
                         <span>人数：</span>
-                        <el-input-number v-model="tableOrderVo.customer_num" size="mini" :min="1" :max="10" prop="tableOrderVo.customer_num" lable="customer_num"></el-input-number><br>
+                        <el-input-number v-model="tableOrderVo.customer_num" size="mini" :min="1" :max="10" prop="customer_num" lable="customer_num"></el-input-number><br>
                         <span>总数量：</span><br>
                         <span>总金额：</span><br>
                         <button>登记</button>
                     </div>
                     
-                </div> -->
+                </div>
             </el-aside>
             <el-container>
                 <el-main >
@@ -41,7 +41,7 @@
                                         <span>￥{{food.foodPrice}}</span><br>                  
                                         <div class="bottom clearfix">                    
                                                                 
-                                            <el-button type="text" class="button">添加</el-button>                    
+                                            <el-button type="text" class="button" @click="addFoodOrder(food.foodNo)">添加</el-button>                    
                                         </div>                
                                         </div>                
                                         </el-card>                
@@ -84,6 +84,8 @@
 <script>
 import { listFood , getListByPage} from '../api/food';
 import {findTable} from "../api/table";
+import {addFood} from "../api/orderItem";
+import { gettableOrderVo} from "../api/order";
 export default {
     data() {
       return {
@@ -93,16 +95,16 @@ export default {
         foodList: [
             
         ],
-        // tableOrderVo:{
-        //   tableId: undefined,
-        //   customer_num: undefined,
-        //   foodNo: undefined,
-        // },  
-        // queryParams: {
-        //   tableId: undefined,
-        //   tableName:undefined,
-        //   tableNo: undefined,
-        // },      
+        tableOrderVo:{
+          tableNo: undefined,
+          orderNo: undefined,
+          foodNo: undefined,
+        },  
+        queryParams: {
+          tableId: undefined,
+          tableName:undefined,
+          tableNo: undefined,
+        },      
 		pageSize:0,
         pageNum:0,     
 		total:null,        
@@ -131,17 +133,25 @@ export default {
             
         },
         getInfo(){
-            // let list = this;
-            // list.tableOrder = this.$route.params.tableOrder;
-            // findTable(this.tableOrder.tableId).then((response) => {
-            // this.queryParams = response.data;
-            // });
+            let list = this;
+            list.tableOrder = this.$route.params.tableOrder;
+            findTable(this.tableOrder.tableId).then((response) => {
+                this.queryParams = response.data;
+            });
+            gettableOrderVo(this.tableOrder.tableId).then((response) => {
+                this.tableOrderVo = response.data;
+            });
+            
         },
         handleClick(tab, event) {
             console.log(tab, event,this.$data);
         },
         addFoodOrder(foodNo){
-            
+
+            this.tableOrderVo.foodNo=foodNo;
+            addFood(this.tableOrderVo).then((response) => {
+            this.tableOrderVo = response.data;
+            });
         },
         getListByPage(){
             getListByPage(this.query).then((response)=>{

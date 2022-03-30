@@ -7,3 +7,12 @@ export function createOrder(tableId,customer_num) {
     })
     
   }
+//查询订单Vo列表
+export function gettableOrderVo(tableId) {
+  console.log(typeof tableId)
+  return request({
+    url: '/order/getVo?tableId='+tableId,
+    method: 'get',
+  })
+  
+}

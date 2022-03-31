@@ -2,14 +2,14 @@
     <div class="menu" >
         <el-container style="height:610px">
             <el-aside width="300px">
-                <div :model="tableOrderVo,queryParams">
+                <div :model="queryParams">
                     <div style="border:1px solid #333;text-align: left; height:485px">
                          <el-table
                              
                              style="width: 100%"
                          >
                             <el-table-column
-                                prop="foodNo"
+                                
                                 label="购物车"
                                 width="180">
                             </el-table-column>
@@ -19,7 +19,7 @@
                     <div style="border:1px solid #333;text-align: left; height:115px ">
                         <span lable="桌号">桌号:{{queryParams.tableNo}}</span><br>
                         <span>人数：</span>
-                        <el-input-number v-model="tableOrderVo.customer_num" size="mini" :min="1" :max="10" prop="customer_num" lable="customer_num"></el-input-number><br>
+                        <el-input-number v-model="Orderitem.customer_num" size="mini" :min="1" :max="10"></el-input-number><br>
                         <span>总数量：</span><br>
                         <span>总金额：</span><br>
                         <button>登记</button>
@@ -104,7 +104,15 @@ export default {
           tableId: undefined,
           tableName:undefined,
           tableNo: undefined,
-        },      
+        },
+         Orderitem: {
+            customer_num:undefined
+        }, 
+        Orderitem2: {
+            tableNo: undefined,
+            orderNo: undefined,
+        },
+             
 		pageSize:0,
         pageNum:0,     
 		total:null,        
@@ -135,11 +143,12 @@ export default {
         getInfo(){
             let list = this;
             list.tableOrder = this.$route.params.tableOrder;
+            this.Orderitem.customer_num=this.tableOrder.customer_num;
             findTable(this.tableOrder.tableId).then((response) => {
                 this.queryParams = response.data;
             });
             gettableOrderVo(this.tableOrder.tableId).then((response) => {
-                this.tableOrderVo = response.data;
+                this.Orderitem2 = response.data;
             });
             
         },
@@ -147,10 +156,19 @@ export default {
             console.log(tab, event,this.$data);
         },
         addFoodOrder(foodNo){
-
+            // var tableOrderVo=new Map();
+            // tableOrderVo.set('tableNo',this.Orderitem2.tableNo);
+            // tableOrderVo.set('orderNo',this.Orderitem2.orderNo);
+            // tableOrderVo.set('foodNo',foodNo);
+           
+            // console.log(tableOrderVo);
+            this.tableOrderVo.tableNo=this.Orderitem2.tableNo;
+            this.tableOrderVo.orderNo=this.Orderitem2.orderNo;
             this.tableOrderVo.foodNo=foodNo;
+            console.log(this.tableOrderVo);
             addFood(this.tableOrderVo).then((response) => {
             this.tableOrderVo = response.data;
+            
             });
         },
         getListByPage(){

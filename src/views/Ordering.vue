@@ -1,16 +1,17 @@
 <template>
+
   <div class="table" :data="tableList" >
-    <div v-for="(table,tableId) in tableList" :key="tableId" >
+    <div v-for="(table) in tableList" >
       <div class="tablecard">
         <el-col :span="6" >
           <el-card shadow="never"  >
-              <div v-if="table.tableId !== tableOrderVo.tableId" >
+              <div v-if="table.state == true" >
                 <img class="img"  
                   src="@/assets/not_use.png" 
                   >
               </img>
               </div>
-              <div v-else-if="table.tableId === tableOrderVo.tableId">
+              <div v-else-if="table.state == false">
                 <img class="img2" 
                   src="@/assets/in_use.png"
                   >
@@ -71,12 +72,14 @@ import {listTable,findTable} from "../api/table";
 import {createOrder , gettableOrderVo} from "../api/order";
   export default {
     data() {
+      
       return {
+        
          // 遮罩层
         loading: false,
         
         tableList: [],
-        
+      
         queryParams: {
           tableId: undefined,
           tableName:undefined,
@@ -87,8 +90,9 @@ import {createOrder , gettableOrderVo} from "../api/order";
           customer_num: undefined,
           orderNo: undefined,
         },
-        
+       
         dialogFormVisible: false,
+        zhuangtai:[],
         
         formLabelWidth: '120px',
         options: [{
@@ -108,8 +112,11 @@ import {createOrder , gettableOrderVo} from "../api/order";
       }
       
     },
+   
     created() {
       this.getList();
+      
+      console.log(this.$data)
       // //查询所有staff赋值staffList
       // listStaff().then((response) =>{
       //     this.staffList = response.data;
@@ -120,9 +127,27 @@ import {createOrder , gettableOrderVo} from "../api/order";
       /** 查询桌子列表 */
       getList() {
         this.loading = true;
+        var idList= [];
+        var zhuangtai2=[]
         listTable(this.tableList).then((response) => {
           this.tableList = response.data;
           this.loading = false;
+          this.tableList.forEach((obj)=>{idList.push(obj.tableId)})
+          for(var key in idList){
+            gettableOrderVo(idList[key]).then((response) =>{
+              zhuangtai2.push((typeof response.data)=="object" ? false : true);
+            
+            });
+          };
+          
+          setTimeout(() => {
+            console.log(zhuangtai2)
+            for(var i in zhuangtai2){
+              this.tableList[i].state=zhuangtai2[i]
+            }
+          }, 1000);
+         
+        
         });
         // listStaff(this.queryParams).then((response) => {
         //   this.staffList = response.data;
@@ -130,19 +155,6 @@ import {createOrder , gettableOrderVo} from "../api/order";
         // });
         
       },
-      // getVo(tableId){
-      //   var tableOrderVolist={};
-      //   gettableOrderVo(tableId).then((response) =>{
-      //     tableOrderVolist = response;
-      //     console.log(tableId);
-      //     console.log(tableOrderVolist);
-      //     return tableOrderVolist = null ? false : true ;
-      //   }); 
-        
-        
-        
-      // },
-      
       handleAddTable(val){
         this.tableOrderVo.tableId=parseInt(val);
           findTable(this.tableOrderVo.tableId).then((response) => {
@@ -154,7 +166,6 @@ import {createOrder , gettableOrderVo} from "../api/order";
       handleAddTableVo(){
         
         createOrder(this.tableOrderVo.tableId,this.tableOrderVo.customer_num).then((response)=>{
-          // this.tableOrderVo=response.data;
           this.tableOrderVo.tableId=response.data.tableId;
           this.tableOrderVo.customer_num=response.data.customer_num;
         })  

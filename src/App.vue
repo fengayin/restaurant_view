@@ -26,6 +26,7 @@
 import Navbar from '@/views/Navbar'
 export default {
   name: 'app',
+  
   components: {
     Navbar
   },

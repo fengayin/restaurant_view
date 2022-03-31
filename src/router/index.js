@@ -18,6 +18,7 @@ const routes = [
     name: 'Menu',
     component:() => import("../views/Menu.vue"),
   },
+  
 ];
 
 const router = new VueRouter({

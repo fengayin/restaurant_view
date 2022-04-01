@@ -7,6 +7,13 @@ export function listFood(query) {
       params: query
     })
   }
+  //查询食物名字
+export function findFoodNo(foodNo) {
+  return request({
+    url: '/food/queryByFoodNo/'+ foodNo,
+    method: 'get',
+  })
+}
 //分页查询
 export function getListByPage(query){
   return request({

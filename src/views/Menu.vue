@@ -1,17 +1,16 @@
 <template>
     <div class="menu" >
         <el-container style="height:610px">
-            <el-aside width="380px">
+            <el-aside width="400px">
                 <div >  
-                    <div style="border:1px solid #333;text-align: left; height:115px ">
+                    <div style="text-align: left; height:60px ">
                         <span lable="桌号">桌号:{{tablequeryParams.tableNo}}</span><br>
                         <span>人数：</span>
                         <el-input-number v-model="Orderitem.customer_num" size="mini" :min="1" :max="10"></el-input-number><br>
-                        <span>总数量：</span><br>
-                        <span>总金额：</span><br>
+                        
                         
                     </div>
-                    <div style="border:1px solid #333;text-align: left; height:485px" > 
+                    <div  > 
                          <!-- <div v-for="(food,foodNo) in orderItemList" :key="foodNo">
                              <el-card class="box-card">
                                 <div slot="header" class="clearfix">
@@ -30,13 +29,18 @@
                          <el-table 
                             :header-cell-style="{background:'#eef1f6',color:'#606266'}"
                             :data="orderItemList"
-                            height="430px"
+                            height="535px"
                             style="width: 100% "
-                            fit
-                            @selection-change="handleSelectionChange">
+                            show-summary:true
+                            >
+                            <el-table-column
+                                type="index"
+                                >
+                            </el-table-column>
                             <el-table-column
                             prop="name"
-                            label="名字">
+                            label="名字"
+                            >
                             </el-table-column>
                             <el-table-column
                             prop="foodPrice"
@@ -49,8 +53,7 @@
                             <el-table-column
                             label="操作">
                             <template slot-scope="scope">
-                                <el-button  type="text" size="small">修改数量</el-button>
-                                <el-button  type="text" size="small">删除</el-button>
+                                <el-button  type="text" size="small" @click="handledeleteFood(scope.$index,orderItemList)">减少</el-button>
                             </template>
                             </el-table-column>
                         </el-table>
@@ -93,35 +96,176 @@
                                 </div>
                         </el-tab-pane>
                         <el-tab-pane label="套餐" name="2">
-                            taocan
-                        </el-tab-pane>
-                        <el-tab-pane label="饭" name="3">
-                            <!-- <div style="margin-left:1%;margin-right:1%;height:420px ">
+                            <div style="margin-left:1%;margin-right:1%;height:420px ">
                                 <el-row>            
-                                    <el-col :span="4" v-for="(category) in category[2]" :key="foodId" :offset="1" >                
+                                    <el-col :span="4" v-for="(combo) in comboList" :key="combo.comboId" :offset="1" >                
                                     <div style="margin-top:15px">                    
                                         <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
                                         <div>                    
-                                        <span>{{category.food.foodName}}</span><br>  
-                                        <span>￥{{category.food.foodPrice}}</span><br>                  
+                                        <span>{{combo.comboName}}</span><br>  
+                                        <span>￥{{combo.comboPrice}}</span><br>                  
                                         <div class="bottom clearfix">                                 
-                                            <el-button type="text" class="button" @click="addFoodOrder(food.foodNo)">添加</el-button>                    
+                                            <el-button type="text" class="button" >添加</el-button>                    
                                         </div>                
                                         </div>                
                                         </el-card>                
                                     </div>            
                                     </el-col>        
-                                    </el-row>   
-                            </div> -->
-                            fan
+                                    </el-row>    
+                            </div>
                         </el-tab-pane>
-                        <el-tab-pane label="意面" name="4">意面</el-tab-pane>
-                        <el-tab-pane label="披萨" name="5">披萨</el-tab-pane>
-                        <el-tab-pane label="沙拉" name="6">沙拉</el-tab-pane>
-                        <el-tab-pane label="小吃" name="7">小吃</el-tab-pane>
-                        <el-tab-pane label="甜品" name="8">甜品</el-tab-pane>
-                        <el-tab-pane label="汤" name="9">汤</el-tab-pane>
-                        <el-tab-pane label="饮料" name="10">饮料</el-tab-pane>
+                        <el-tab-pane label="饭" name="3">
+                             <div style="margin-left:1%;margin-right:1%;height:420px ">
+                                <el-row>            
+                                    <el-col :span="4" v-for="(rice) in riceList" :key="rice.foodId" :offset="1" >                
+                                    <div style="margin-top:15px">                    
+                                        <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
+                                        <div>                    
+                                        <span>{{rice.foodName}}</span><br>  
+                                        <span>￥{{rice.foodPrice}}</span><br>                  
+                                        <div class="bottom clearfix">                                 
+                                            <el-button type="text" class="button" @click="addFoodOrder(rice.foodNo)">添加</el-button>                    
+                                        </div>                
+                                        </div>                
+                                        </el-card>                
+                                    </div>            
+                                    </el-col>        
+                                    </el-row>    
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="意面" name="4">
+                            <div style="margin-left:1%;margin-right:1%;height:420px ">
+                                <el-row>            
+                                    <el-col :span="4" v-for="(pasta) in pastaList" :key="pasta.foodId" :offset="1" >                
+                                    <div style="margin-top:15px">                    
+                                        <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
+                                        <div>                    
+                                        <span>{{pasta.foodName}}</span><br>  
+                                        <span>￥{{pasta.foodPrice}}</span><br>                  
+                                        <div class="bottom clearfix">                                 
+                                            <el-button type="text" class="button" @click="addFoodOrder(pasta.foodNo)">添加</el-button>                    
+                                        </div>                
+                                        </div>                
+                                        </el-card>                
+                                    </div>            
+                                    </el-col>        
+                                    </el-row>    
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="披萨" name="5">
+                            <div style="margin-left:1%;margin-right:1%;height:420px ">
+                                <el-row>            
+                                    <el-col :span="4" v-for="(pizza) in pizzaList" :key="pizza.foodId" :offset="1" >                
+                                    <div style="margin-top:15px">                    
+                                        <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
+                                        <div>                    
+                                        <span>{{pizza.foodName}}</span><br>  
+                                        <span>￥{{pizza.foodPrice}}</span><br>                  
+                                        <div class="bottom clearfix">                                 
+                                            <el-button type="text" class="button" @click="addFoodOrder(pizza.foodNo)">添加</el-button>                    
+                                        </div>                
+                                        </div>                
+                                        </el-card>                
+                                    </div>            
+                                    </el-col>        
+                                    </el-row>    
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="沙拉" name="6">
+                            <div style="margin-left:1%;margin-right:1%;height:420px ">
+                                <el-row>            
+                                    <el-col :span="4" v-for="(sala) in salaList" :key="sala.foodId" :offset="1" >                
+                                    <div style="margin-top:15px">                    
+                                        <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
+                                        <div>                    
+                                        <span>{{sala.foodName}}</span><br>  
+                                        <span>￥{{sala.foodPrice}}</span><br>                  
+                                        <div class="bottom clearfix">                                 
+                                            <el-button type="text" class="button" @click="addFoodOrder(sala.foodNo)">添加</el-button>                    
+                                        </div>                
+                                        </div>                
+                                        </el-card>                
+                                    </div>            
+                                    </el-col>        
+                                    </el-row>    
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="小吃" name="7">
+                            <div style="margin-left:1%;margin-right:1%;height:420px ">
+                                <el-row>            
+                                    <el-col :span="4" v-for="(snack) in snackList" :key="snack.foodId" :offset="1" >                
+                                    <div style="margin-top:15px">                    
+                                        <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
+                                        <div>                    
+                                        <span>{{snack.foodName}}</span><br>  
+                                        <span>￥{{snack.foodPrice}}</span><br>                  
+                                        <div class="bottom clearfix">                                 
+                                            <el-button type="text" class="button" @click="addFoodOrder(snack.foodNo)">添加</el-button>                    
+                                        </div>                
+                                        </div>                
+                                        </el-card>                
+                                    </div>            
+                                    </el-col>        
+                                    </el-row>    
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="甜品" name="8">
+                            <div style="margin-left:1%;margin-right:1%;height:420px ">
+                                <el-row>            
+                                    <el-col :span="4" v-for="(dessert) in dessertList" :key="dessert.foodId" :offset="1" >                
+                                    <div style="margin-top:15px">                    
+                                        <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
+                                        <div>                    
+                                        <span>{{dessert.foodName}}</span><br>  
+                                        <span>￥{{dessert.foodPrice}}</span><br>                  
+                                        <div class="bottom clearfix">                                 
+                                            <el-button type="text" class="button" @click="addFoodOrder(dessert.foodNo)">添加</el-button>                    
+                                        </div>                
+                                        </div>                
+                                        </el-card>                
+                                    </div>            
+                                    </el-col>        
+                                    </el-row>    
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="汤" name="9">
+                            <div style="margin-left:1%;margin-right:1%;height:420px ">
+                                <el-row>            
+                                    <el-col :span="4" v-for="(soup) in soupList" :key="soup.foodId" :offset="1" >                
+                                    <div style="margin-top:15px">                    
+                                        <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
+                                        <div>                    
+                                        <span>{{soup.foodName}}</span><br>  
+                                        <span>￥{{soup.foodPrice}}</span><br>                  
+                                        <div class="bottom clearfix">                                 
+                                            <el-button type="text" class="button" @click="addFoodOrder(soup.foodNo)">添加</el-button>                    
+                                        </div>                
+                                        </div>                
+                                        </el-card>                
+                                    </div>            
+                                    </el-col>        
+                                    </el-row>    
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="饮料" name="10">
+                            <div style="margin-left:1%;margin-right:1%;height:420px ">
+                                <el-row>            
+                                    <el-col :span="4" v-for="(drink) in drinkList" :key="drink.foodId" :offset="1" >                
+                                    <div style="margin-top:15px">                    
+                                        <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
+                                        <div>                    
+                                        <span>{{drink.foodName}}</span><br>  
+                                        <span>￥{{drink.foodPrice}}</span><br>                  
+                                        <div class="bottom clearfix">                                 
+                                            <el-button type="text" class="button" @click="addFoodOrder(drink.foodNo)">添加</el-button>                    
+                                        </div>                
+                                        </div>                
+                                        </el-card>                
+                                    </div>            
+                                    </el-col>        
+                                    </el-row>    
+                            </div>
+                        </el-tab-pane>
                     </el-tabs>
                     <button>取消点餐</button>
                     <button>登记</button>
@@ -134,18 +278,26 @@
 <script>
 import {listFood , getListByPage,findFoodNo} from '../api/food';
 import {findTable} from "../api/table";
-import {addFood} from "../api/orderItem";
+import {addFood,deleteFood} from "../api/orderItem";
 import {gettableOrderVo} from "../api/order";
-import {categoryIdList} from "../api/category"
+import {listCategory,IdCategory} from "../api/category";
+import {listCombo} from "../api/combo"
 export default {
     data() {
       return {
           // 遮罩层
         loading: false,
         activeName: '1',
-        foodList: [
-            
-        ],
+        foodList: [],
+        comboList:[],
+        drinkList:[],
+        pastaList:[],
+        riceList:[],
+        snackList:[],
+        pizzaList:[],
+        soupList:[],
+        salaList:[],
+        dessertList:[],
         tableOrderVo:{
           tableNo: undefined,
           orderNo: undefined,
@@ -168,9 +320,7 @@ export default {
             tableNo: undefined,
             orderNo: undefined,
         },
-        category: {
-
-        },
+       
         orderItemList:[], 
         orderItemList2:[],    
 		pageSize:0,
@@ -199,8 +349,40 @@ export default {
                 this.foodList = response.data;
                 this.loading = false;
             });
+             this.getListByPage();
+            // listCategory(this.category).then((response) =>{
+            //     this.category =response.data;
+            // });
+            listCombo(this.comboList).then((response) =>{
+                this.comboList =response.data;
+            });
+
+            IdCategory(1).then((response) =>{
+                this.drinkList = response.data.foods;
+            });
+            IdCategory(2).then((response) =>{
+                this.pastaList = response.data.foods;
+            });
+            IdCategory(3).then((response) =>{
+                this.riceList = response.data.foods;
+            });
+            IdCategory(4).then((response) =>{
+                this.snackList = response.data.foods;
+            });
+            IdCategory(5).then((response) =>{
+                this.pizzaList = response.data.foods;
+            });
+            IdCategory(6).then((response) =>{
+                this.soupList = response.data.foods;
+            });
+            IdCategory(7).then((response) =>{
+                this.salaList = response.data.foods;
+            });
+            IdCategory(8).then((response) =>{
+                this.dessertList = response.data.foods;
+            });
             
-            this.getListByPage();
+           
             
         },
         getInfo(){
@@ -210,9 +392,7 @@ export default {
             findTable(this.tableOrder.tableId).then((response) => {
                 this.tablequeryParams = response.data;
             });
-            categoryIdList(this.category).then((response) =>{
-                this.category =response.data;
-            });
+            
             gettableOrderVo(this.tableOrder.tableId).then((response) => {
                 this.Orderitem2 = response.data;
             });
@@ -253,15 +433,23 @@ export default {
                     
                 // }
             }); 
-            // findFoodNo(foodNo).then((response) =>{
-            //             this.foodqueryParams = response.data;
-                        
-                        
-            //         });
-            
+        },
+        handledeleteFood(index,orderItemList){
+            // var changetableordervo={
+            //     "foodNo":orderItemList[index].foodNo,
+            //     "foodQuantity":orderItemList[index].foodQuantity,
+            //     "foodPrice":orderItemList[index].foodPrice,
+            // };
+            var changetableordervo={};
+            changetableordervo.foodNo=orderItemList[index].foodNo;
+            changetableordervo.foodQuantity=orderItemList[index].foodQuantity;
+            changetableordervo.foodPrice=orderItemList[index].foodPrice;
            
-
-
+            deleteFood(changetableordervo).then((response) =>{
+                // this.orderItemList=response.data;
+            })
+            console.log(index)
+            console.log(changetableordervo)
         },
         
         getListByPage(){

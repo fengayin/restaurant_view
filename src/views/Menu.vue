@@ -31,7 +31,7 @@
                             :data="orderItemList"
                             height="535px"
                             style="width: 100% "
-                            show-summary:true
+                            show-summary
                             >
                             <el-table-column
                                 type="index"
@@ -63,7 +63,7 @@
             <el-container>
                 <el-main >
                     <el-tabs v-model="activeName" @tab-click="handleClick" style="height:520px ">
-                        <el-tab-pane label="全部" name="1" >
+                        <!-- <el-tab-pane label="全部" name="1" >
                             <div style="margin-left:1%;margin-right:1%;height:420px ">
                                 <el-row>            
                                     <el-col :span="4" v-for="(food) in foodList" :key="food.foodId" :offset="1" >                
@@ -94,7 +94,7 @@
                                     </el-pagination>          
                                 </div>        
                                 </div>
-                        </el-tab-pane>
+                        </el-tab-pane> -->
                         <el-tab-pane label="套餐" name="2">
                             <div style="margin-left:1%;margin-right:1%;height:420px ">
                                 <el-row>            
@@ -163,6 +163,25 @@
                                         <span>￥{{pizza.foodPrice}}</span><br>                  
                                         <div class="bottom clearfix">                                 
                                             <el-button type="text" class="button" @click="addFoodOrder(pizza.foodNo)">添加</el-button>                    
+                                        </div>                
+                                        </div>                
+                                        </el-card>                
+                                    </div>            
+                                    </el-col>        
+                                    </el-row>    
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="牛排" name="11">
+                            <div style="margin-left:1%;margin-right:1%;height:420px ">
+                                <el-row>            
+                                    <el-col :span="4" v-for="(steak) in steakList" :key="steak.foodId" :offset="1" >                
+                                    <div style="margin-top:15px">                    
+                                        <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
+                                        <div>                    
+                                        <span>{{steak.foodName}}</span><br>  
+                                        <span>￥{{steak.foodPrice}}</span><br>                  
+                                        <div class="bottom clearfix">                                 
+                                            <el-button type="text" class="button" @click="addFoodOrder(steak.foodNo)">添加</el-button>                    
                                         </div>                
                                         </div>                
                                         </el-card>                
@@ -267,8 +286,8 @@
                             </div>
                         </el-tab-pane>
                     </el-tabs>
-                    <button>取消点餐</button>
-                    <button>登记</button>
+                    <button type="text" class="button" @click="deleteVo(Orderitem.tableId)">取消点餐</button>
+                    <button type="text" class="button" @click="comfirm()">登记</button>
                 </el-main>
             </el-container>
         </el-container>
@@ -278,16 +297,18 @@
 <script>
 import {listFood , getListByPage,findFoodNo} from '../api/food';
 import {findTable} from "../api/table";
-import {addFood,deleteFood} from "../api/orderItem";
-import {gettableOrderVo} from "../api/order";
+import {addFood,deleteFood,comfirmOrder} from "../api/orderItem";
+import {gettableOrderVo,deleteVo} from "../api/order";
 import {listCategory,IdCategory} from "../api/category";
-import {listCombo} from "../api/combo"
+import {listCombo} from "../api/combo";
+import axios from 'axios';
+import Qs from 'qs';
 export default {
     data() {
       return {
           // 遮罩层
         loading: false,
-        activeName: '1',
+        activeName: '2',
         foodList: [],
         comboList:[],
         drinkList:[],
@@ -298,6 +319,7 @@ export default {
         soupList:[],
         salaList:[],
         dessertList:[],
+        steakList:[],
         tableOrderVo:{
           tableNo: undefined,
           orderNo: undefined,
@@ -381,14 +403,15 @@ export default {
             IdCategory(8).then((response) =>{
                 this.dessertList = response.data.foods;
             });
-            
-           
-            
+            IdCategory(9).then((response) =>{
+                this.steakList = response.data.foods;
+            });
         },
         getInfo(){
             let list = this;
             list.tableOrder = this.$route.params.tableOrder;
             this.Orderitem.customer_num=this.tableOrder.customer_num;
+            this.Orderitem.tableId=this.tableOrder.tableId;
             findTable(this.tableOrder.tableId).then((response) => {
                 this.tablequeryParams = response.data;
             });
@@ -434,24 +457,60 @@ export default {
                 // }
             }); 
         },
-        handledeleteFood(index,orderItemList){
-            // var changetableordervo={
-            //     "foodNo":orderItemList[index].foodNo,
-            //     "foodQuantity":orderItemList[index].foodQuantity,
-            //     "foodPrice":orderItemList[index].foodPrice,
-            // };
-            var changetableordervo={};
-            changetableordervo.foodNo=orderItemList[index].foodNo;
-            changetableordervo.foodQuantity=orderItemList[index].foodQuantity;
-            changetableordervo.foodPrice=orderItemList[index].foodPrice;
-           
-            deleteFood(changetableordervo).then((response) =>{
-                // this.orderItemList=response.data;
+        deleteVo(tableId){
+            deleteVo(tableId).then((response) =>{  
             })
-            console.log(index)
-            console.log(changetableordervo)
+            this.$router.push({name:'Ordering'})
+        },
+        handledeleteFood(index,orderItemList){
+            // var changetableordervo=this.$qs.stringify({
+            //     "tableNo":this.tableOrderVo.tableNo,
+            //     "orderNo":this.tableOrderVo.orderNo,
+            //     "foodNo":orderItemList[index].foodNo,
+            // });
+            // var changetableordervo={};
+            // changetableordervo.foodNo=orderItemList[index].foodNo;
+            // changetableordervo.tableNo=this.tableOrderVo.tableNo;
+            // changetableordervo.orderNo=this.tableOrderVo.orderNo;
+            // this.$axios({
+            //     methods:"post",
+            //     url:'/api/orderItem/deleteFood',
+            //     data:Qs.stringify(changetableordervo)
+            // })
+            // .then(function(res){
+            //     console.log(res)
+            // })
+            // .catch(function(err){
+            //     console.log(err)
+            // })
+            // deleteFood(changetableordervo).then((response) =>{
+            //     // this.orderItemList=response.data;
+            // })
+            // let changetableordervo = new URLSearchParams();
+            // changetableordervo.append('foodNo','fooddri1');
+            // changetableordervo.append('tableNo','this.tableOrderVo.tableNo');
+            // changetableordervo.append('orderNo','this.tableOrderVo.orderNo');
+            // this.$axios({
+            //     methods:"post",
+            //     url:'/api/orderItem/deleteFood',
+            //     data:changetableordervo
+            // }).then((res)=>{
+            //     undefined
+            // })
+            this.tableOrderVo.foodNo=orderItemList[index].foodNo;
+            deleteFood(this.tableOrderVo).then((response) =>{
+                this.orderItemList=response.data;
+            })
+            
         },
         
+        comfirm(){
+            console.log(this.tableOrderVo)
+            comfirmOrder(this.tableOrderVo).then((response) =>{
+               
+            })
+        },
+
         getListByPage(){
             getListByPage(this.query).then((response)=>{
             this.foodList=response.data.list
@@ -504,7 +563,10 @@ export default {
     color: #333;
     border:1px solid #333;
   }
+.el-table {
+overflow: visible !important;
 
+}
 .el-pagination{
     width: 150px;
 }

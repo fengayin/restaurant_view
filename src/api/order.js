@@ -15,3 +15,12 @@ export function gettableOrderVo(tableId) {
   })
   
 }
+//删除Vo
+export function deleteVo(tableId) {
+  return request({
+    url: '/order/deleteVo?tableId='+tableId,
+    method: 'get',
+  })
+  
+}
+

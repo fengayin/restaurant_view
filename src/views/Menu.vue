@@ -298,7 +298,7 @@
 import {listFood , getListByPage,findFoodNo} from '../api/food';
 import {findTable} from "../api/table";
 import {addFood,deleteFood,comfirmOrder} from "../api/orderItem";
-import {gettableOrderVo,deleteVo} from "../api/order";
+import {gettableOrderVo,deleteVo,IdOrder,changeOrder} from "../api/order";
 import {listCategory,IdCategory} from "../api/category";
 import {listCombo} from "../api/combo";
 import axios from 'axios';
@@ -410,51 +410,40 @@ export default {
         getInfo(){
             let list = this;
             list.tableOrder = this.$route.params.tableOrder;
-            this.Orderitem.customer_num=this.tableOrder.customer_num;
-            this.Orderitem.tableId=this.tableOrder.tableId;
-            findTable(this.tableOrder.tableId).then((response) => {
-                this.tablequeryParams = response.data;
-            });
+            console.log(typeof this.tableOrder);
             
-            gettableOrderVo(this.tableOrder.tableId).then((response) => {
-                this.Orderitem2 = response.data;
-            });
+            if((typeof this.tableOrder) =="object"){
+                this.Orderitem.customer_num=this.tableOrder.customer_num;
+                this.Orderitem.tableId=this.tableOrder.tableId;
+                findTable(this.tableOrder.tableId).then((response) => {
+                    this.tablequeryParams = response.data;
+                });
+                gettableOrderVo(this.tableOrder.tableId).then((response) => {
+                    this.Orderitem2 = response.data;
+                });
+            }
+            else{
+                let list = this;
+                list.oldtableOrder = this.$route.params.oldtableOrder;
+                
+                this.tablequeryParams.tableNo=this.oldtableOrder.tableNo;
+                this.Orderitem2 = this.oldtableOrder;
+                console.log(this.Orderitem2)
+            }
+            
             
         },
         handleClick(tab, event) {
-            console.log(tab, event,this.$data);
+           
         },
         addFoodOrder(foodNo){
-            // var tableOrderVo=new Map();
-            // tableOrderVo.set('tableNo',this.Orderitem2.tableNo);
-            // tableOrderVo.set('orderNo',this.Orderitem2.orderNo);
-            // tableOrderVo.set('foodNo',foodNo);
-            // console.log(tableOrderVo);
             this.tableOrderVo.tableNo=this.Orderitem2.tableNo;
             this.tableOrderVo.orderNo=this.Orderitem2.orderNo;
             this.tableOrderVo.foodNo=foodNo;
-            console.log(this.tableOrderVo);
+            
             addFood(this.tableOrderVo.tableNo,this.tableOrderVo.orderNo,this.tableOrderVo.foodNo).then((response) => {
                 this.orderItemList=response.data;
-                // for(var i in this.orderItemList){
-                //     var orderitemlist=new Object();
-                //     orderitemlist.id=i;
-                //     orderitemlist.foodno=this.orderItemList[i].foodNo;
-                //     orderitemlist.foodquantity=this.orderItemList[i].foodQuantity;
-                //     orderitemlist.foodprice=this.orderItemList[i].foodPrice;
-                //     findFoodNo(foodNo).then((response) =>{
-                //         this.foodqueryParams = response.data;
-                //         orderitemlist.foodname=this.foodqueryParams.foodName;
-                //         console.log(orderitemlist);
-                //         this.orderItemList2.push(orderitemlist);
-                        
-                //         console.log(this.orderItemList2);
-                //     });
-                //     // setTimeout(() =>{
-                        
-                //     // })
-                    
-                // }
+                
             }); 
         },
         deleteVo(tableId){
@@ -463,40 +452,6 @@ export default {
             this.$router.push({name:'Ordering'})
         },
         handledeleteFood(index,orderItemList){
-            // var changetableordervo=this.$qs.stringify({
-            //     "tableNo":this.tableOrderVo.tableNo,
-            //     "orderNo":this.tableOrderVo.orderNo,
-            //     "foodNo":orderItemList[index].foodNo,
-            // });
-            // var changetableordervo={};
-            // changetableordervo.foodNo=orderItemList[index].foodNo;
-            // changetableordervo.tableNo=this.tableOrderVo.tableNo;
-            // changetableordervo.orderNo=this.tableOrderVo.orderNo;
-            // this.$axios({
-            //     methods:"post",
-            //     url:'/api/orderItem/deleteFood',
-            //     data:Qs.stringify(changetableordervo)
-            // })
-            // .then(function(res){
-            //     console.log(res)
-            // })
-            // .catch(function(err){
-            //     console.log(err)
-            // })
-            // deleteFood(changetableordervo).then((response) =>{
-            //     // this.orderItemList=response.data;
-            // })
-            // let changetableordervo = new URLSearchParams();
-            // changetableordervo.append('foodNo','fooddri1');
-            // changetableordervo.append('tableNo','this.tableOrderVo.tableNo');
-            // changetableordervo.append('orderNo','this.tableOrderVo.orderNo');
-            // this.$axios({
-            //     methods:"post",
-            //     url:'/api/orderItem/deleteFood',
-            //     data:changetableordervo
-            // }).then((res)=>{
-            //     undefined
-            // })
             this.tableOrderVo.foodNo=orderItemList[index].foodNo;
             deleteFood(this.tableOrderVo).then((response) =>{
                 this.orderItemList=response.data;
@@ -505,10 +460,10 @@ export default {
         },
         
         comfirm(){
-            console.log(this.tableOrderVo)
             comfirmOrder(this.tableOrderVo).then((response) =>{
-               
+               this.$router.push({name:'Ordering'})
             })
+            // IdOrder(this.orderItemList.orderId)
         },
 
         getListByPage(){

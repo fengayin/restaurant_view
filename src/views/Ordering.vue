@@ -23,7 +23,7 @@
               </el-form> -->
               <span>{{table.tableName}}</span>
               <div class="bottom clearfix">
-                <el-button type="text"  @click="handleAddTable(table.tableId),dialogFormVisible= true " class="button" >点餐</el-button>
+                <el-button type="text"  @click="handleAddTable(table.tableId) " class="button" >点餐</el-button>
               </div>
             </div>
           </el-card>
@@ -95,6 +95,7 @@ import {createOrder , gettableOrderVo} from "../api/order";
         zhuangtai:[],
         
         formLabelWidth: '120px',
+        
         options: [{
           value: 1,
           label: 1
@@ -157,20 +158,41 @@ import {createOrder , gettableOrderVo} from "../api/order";
       },
       handleAddTable(val){
         this.tableOrderVo.tableId=parseInt(val);
-          findTable(this.tableOrderVo.tableId).then((response) => {
-          this.queryParams= response.data;
-        });
+        gettableOrderVo(val).then((response) =>{
+              var OldtableOrderVo= response.data;
+              if((typeof OldtableOrderVo) == "object"){
+                this.$router.push({name:'Menu',params:{oldtableOrder : OldtableOrderVo}})
+              }
+              else{
+                  this.dialogFormVisible= true;
+                  findTable(this.tableOrderVo.tableId).then((response) => {
+                  this.queryParams= response.data;
+                });
+        }
+            });
+            
         
         },
 
       handleAddTableVo(){
         
-        createOrder(this.tableOrderVo.tableId,this.tableOrderVo.customer_num).then((response)=>{
-          this.tableOrderVo.tableId=response.data.tableId;
-          this.tableOrderVo.customer_num=response.data.customer_num;
+        if(this.tableOrderVo.customer_num==null){
+          this.$notify.error({
+            title: '错误',
+            message: '请输入人数'
+          });
+        }
+        else{
+          createOrder(this.tableOrderVo.tableId,this.tableOrderVo.customer_num).then((response)=>{
+            this.tableOrderVo.customer_num=response.data.customer_num;
+            this.tableOrderVo.tableId=response.data.tableId;
         })  
        
         this.$router.push({name:'Menu',params:{tableOrder : this.tableOrderVo}})
+        }
+      
+        
+        
       },
       cancelhandleAddTableVo(){
         this.dialogFormVisible=false;

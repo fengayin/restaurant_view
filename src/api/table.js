@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-//查询桌子列表
+//  
 export function listTable(query) {
     return request({
       url: '/table/list',

@@ -36,6 +36,8 @@ export function addFood(tableNo,orderNo,foodNo){
         data: query,
     });
   } 
+
+  
   // //在缓存中删除菜品
   // export function deleteFood(tableNo,orderNo,foodNo){
   //   return request({

@@ -62,7 +62,7 @@
             </el-aside>
             <el-container>
                 <el-main >
-                    <el-tabs v-model="activeName" @tab-click="handleClick" style="height:520px ">
+                    <el-tabs v-model="activeName"  style="height:520px ">
                         <!-- <el-tab-pane label="全部" name="1" >
                             <div style="margin-left:1%;margin-right:1%;height:420px ">
                                 <el-row>            
@@ -96,22 +96,201 @@
                                 </div>
                         </el-tab-pane> -->
                         <el-tab-pane label="套餐" name="2">
-                            <div style="margin-left:1%;margin-right:1%;height:420px ">
-                                <el-row>            
-                                    <el-col :span="4" v-for="(combo) in comboList" :key="combo.comboId" :offset="1" >                
-                                    <div style="margin-top:15px">                    
-                                        <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
-                                        <div>                    
-                                        <span>{{combo.comboName}}</span><br>  
-                                        <span>￥{{combo.comboPrice}}</span><br>                  
-                                        <div class="bottom clearfix">                                 
-                                            <el-button type="text" class="button" >添加</el-button>                    
-                                        </div>                
-                                        </div>                
-                                        </el-card>                
-                                    </div>            
+                            <div style="margin-left:1%;margin-right:1%;height:420px;overflow:auto" >
+                                <!-- <el-row >            
+                                    <el-col :span="4"   >                
+                                        <div style="margin-top:15px">                    
+                                            <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
+                                                <div >                    
+                                                    <span>{{combo1.comboName}}</span><br>  
+                                                    <span>￥{{combo1.comboPrice}}</span><br>
+                                                    <div v-for="food in combo1comboItems" :key="foodId">
+                                                        {{food.food.foodName}}
+                                                    </div>                 
+                                                    <div class="bottom clearfix">                                 
+                                                        <el-button type="text" class="button" >添加</el-button>                    
+                                                    </div>                
+                                                </div>                
+                                            </el-card>                
+                                        </div>  
+                                        <div style="margin-top:15px">                    
+                                            <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
+                                                <div >                    
+                                                    <span>{{combo2.comboName}}</span><br>  
+                                                    <span>￥{{combo2.comboPrice}}</span><br> 
+                                                    <div v-for="food in combo2comboItems" :key="foodId">
+                                                        {{food.food.foodName}}
+                                                    </div>                 
+                                                    <div class="bottom clearfix">                                 
+                                                        <el-button type="text" class="button" >添加</el-button>                    
+                                                    </div>                
+                                                </div>                
+                                            </el-card>                
+                                        </div>          
                                     </el-col>        
-                                    </el-row>    
+                                    </el-row>     -->
+                                    <div style="margin-top:10px">   
+                                        <el-descriptions class="margin-top" title="1" :column="3" border>
+                                            <template slot="extra">
+                                                <el-button type="primary" size="small">添加</el-button>
+                                            </template>
+                                            <el-descriptions-item>
+                                            <template slot="label">
+                                                套餐名
+                                            </template>
+                                            {{combo1.comboName}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item>
+                                            <template slot="label">
+                                                价格
+                                            </template>
+                                            {{combo1.comboPrice}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item >
+                                            <template slot="label" >
+                                                套餐内容
+                                            </template>
+                                            <div v-for="food in combo1comboItems" :key="foodId">
+                                                            {{food.food.foodName}}
+                                                        </div> 
+                                            </el-descriptions-item>
+                                        </el-descriptions>
+                                    </div>
+                                    <div style="margin-top:10px">   
+                                        <el-descriptions class="margin-top" title="2" :column="3" border>
+                                            <template slot="extra">
+                                                <el-button type="primary" size="small">添加</el-button>
+                                            </template>
+                                            <el-descriptions-item>
+                                            <template slot="label">
+                                                套餐名
+                                            </template>
+                                            {{combo2.comboName}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item>
+                                            <template slot="label">
+                                                价格
+                                            </template>
+                                            {{combo2.comboPrice}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item >
+                                            <template slot="label" >
+                                                套餐内容
+                                            </template>
+                                            <div v-for="food in combo2comboItems" :key="foodId">
+                                                            {{food.food.foodName}}
+                                                        </div> 
+                                            </el-descriptions-item>
+                                        </el-descriptions>
+                                    </div>
+                                    <div style="margin-top:10px">   
+                                        <el-descriptions class="margin-top" title="3" :column="3" border>
+                                            <template slot="extra">
+                                                <el-button type="primary" size="small">添加</el-button>
+                                            </template>
+                                            <el-descriptions-item>
+                                            <template slot="label">
+                                                套餐名
+                                            </template>
+                                            {{combo3.comboName}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item>
+                                            <template slot="label">
+                                                价格
+                                            </template>
+                                            {{combo3.comboPrice}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item >
+                                            <template slot="label" >
+                                                套餐内容
+                                            </template>
+                                            <div v-for="food in combo3comboItems" :key="foodId">
+                                                            {{food.food.foodName}}
+                                                        </div> 
+                                            </el-descriptions-item>
+                                        </el-descriptions>
+                                    </div>
+                                    <div style="margin-top:10px">   
+                                        <el-descriptions class="margin-top" title="4" :column="3" border>
+                                            <template slot="extra">
+                                                <el-button type="primary" size="small">添加</el-button>
+                                            </template>
+                                            <el-descriptions-item>
+                                            <template slot="label">
+                                                套餐名
+                                            </template>
+                                            {{combo4.comboName}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item>
+                                            <template slot="label">
+                                                价格
+                                            </template>
+                                            {{combo4.comboPrice}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item >
+                                            <template slot="label" >
+                                                套餐内容
+                                            </template>
+                                            <div v-for="food in combo4comboItems" :key="foodId">
+                                                            {{food.food.foodName}}
+                                                        </div> 
+                                            </el-descriptions-item>
+                                        </el-descriptions>
+                                    </div>
+                                    <div style="margin-top:10px">   
+                                        <el-descriptions class="margin-top" title="5" :column="3" border>
+                                            <template slot="extra">
+                                                <el-button type="primary" size="small">添加</el-button>
+                                            </template>
+                                            <el-descriptions-item>
+                                            <template slot="label">
+                                                套餐名
+                                            </template>
+                                            {{combo5.comboName}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item>
+                                            <template slot="label">
+                                                价格
+                                            </template>
+                                            {{combo5.comboPrice}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item >
+                                            <template slot="label" >
+                                                套餐内容
+                                            </template>
+                                            <div v-for="food in combo5comboItems" :key="foodId">
+                                                            {{food.food.foodName}}
+                                                        </div> 
+                                            </el-descriptions-item>
+                                        </el-descriptions>
+                                    </div>
+                                    <div style="margin-top:10px">   
+                                        <el-descriptions class="margin-top" title="6" :column="3" border>
+                                            <template slot="extra">
+                                                <el-button type="primary" size="small">添加</el-button>
+                                            </template>
+                                            <el-descriptions-item>
+                                            <template slot="label">
+                                                套餐名
+                                            </template>
+                                            {{combo6.comboName}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item>
+                                            <template slot="label">
+                                                价格
+                                            </template>
+                                            {{combo6.comboPrice}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item >
+                                            <template slot="label" >
+                                                套餐内容
+                                            </template>
+                                            <div v-for="food in combo6comboItems" :key="foodId">
+                                                            {{food.food.foodName}}
+                                                        </div> 
+                                            </el-descriptions-item>
+                                        </el-descriptions>
+                                    </div>
                             </div>
                         </el-tab-pane>
                         <el-tab-pane label="饭" name="3">
@@ -300,7 +479,7 @@ import {findTable} from "../api/table";
 import {addFood,deleteFood,comfirmOrder} from "../api/orderItem";
 import {gettableOrderVo,deleteVo,IdOrder,changeOrder} from "../api/order";
 import {listCategory,IdCategory} from "../api/category";
-import {listCombo} from "../api/combo";
+import {IdCombo} from "../api/combo";
 import axios from 'axios';
 import Qs from 'qs';
 export default {
@@ -309,8 +488,20 @@ export default {
           // 遮罩层
         loading: false,
         activeName: '2',
+        combo1:[],
+        combo1comboItems:[],
+        combo2:[],
+        combo2comboItems:[],
+        combo3:[],
+        combo3comboItems:[],
+        combo4:[],
+        combo4comboItems:[],
+        combo5:[],
+        combo5comboItems:[],
+        combo6:[],
+        combo6comboItems:[],
+
         foodList: [],
-        comboList:[],
         drinkList:[],
         pastaList:[],
         riceList:[],
@@ -375,8 +566,29 @@ export default {
             // listCategory(this.category).then((response) =>{
             //     this.category =response.data;
             // });
-            listCombo(this.comboList).then((response) =>{
-                this.comboList =response.data;
+            IdCombo(1).then((response) =>{
+                this.combo1 =response.data;
+                this.combo1comboItems=response.data.comboItems;
+            });
+            IdCombo(2).then((response) =>{
+                this.combo2 =response.data;
+                this.combo2comboItems=response.data.comboItems;
+            });
+            IdCombo(3).then((response) =>{
+                this.combo3 =response.data;
+                this.combo3comboItems=response.data.comboItems;
+            });
+            IdCombo(4).then((response) =>{
+                this.combo4 =response.data;
+                this.combo4comboItems=response.data.comboItems;
+            });
+            IdCombo(5).then((response) =>{
+                this.combo5 =response.data;
+                this.combo5comboItems=response.data.comboItems;
+            });
+            IdCombo(6).then((response) =>{
+                this.combo6 =response.data;
+                this.combo6comboItems=response.data.comboItems;
             });
 
             IdCategory(1).then((response) =>{
@@ -432,9 +644,6 @@ export default {
             }
             
             
-        },
-        handleClick(tab, event) {
-           
         },
         addFoodOrder(foodNo){
             this.tableOrderVo.tableNo=this.Orderitem2.tableNo;

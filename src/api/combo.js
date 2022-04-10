@@ -7,3 +7,11 @@ export function listCombo(query) {
       params: query
     })
   }
+
+  //查询单条套餐数据
+export function IdCombo(comboId) {
+  return request({
+    url: '/combo/'+comboId,
+    method: 'get',
+  })
+}

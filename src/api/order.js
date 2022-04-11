@@ -1,5 +1,16 @@
 import request from '@/utils/request'
 //查询订单列表
+export function listOrder(query) {
+  return request({
+    url: '/order/list',
+    method: 'get',
+    params: query
+  })
+  
+}
+
+
+//创建订单
 export function createOrder(tableId,customer_num) {
     return request({
       url: '/order/createOrder?tableId='+tableId+'&customer_num='+customer_num,
@@ -16,14 +27,7 @@ export function IdOrder(orderId) {
   })
 }
 
-//修改数据
-export function changeOrder(query) {
-  return request({
-    url: '/order',
-    method: 'put',
-    data:query
-  })
-}
+
 
 //查询订单Vo列表
 export function gettableOrderVo(tableId) {

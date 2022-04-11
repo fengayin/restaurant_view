@@ -1,10 +1,11 @@
 import request from '@/utils/request'
 import qs from 'qs'
 //添加菜品到订单缓存中
-export function addFood(tableNo,orderNo,foodNo){
+export function addFood(query){
     return request({
-        url:"/orderItem/addFood?tableNo="+tableNo+"&orderNo="+orderNo+"&foodNo="+foodNo,
-        method:"get",
+        url:"/orderItem/addFood",
+        method:"post",
+        data: query,
     });
   }
   // //在缓存中删除菜品

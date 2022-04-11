@@ -3,7 +3,7 @@
         <el-tabs v-model="activeName" style="height:520px ">
             <el-tab-pane label="未结账" name="1">
                 <el-table
-                    :data="tableData"
+                    :data="orderList"
                     border
                     style="width: 100%">
                     <el-table-column
@@ -12,22 +12,22 @@
                     width="120">
                     </el-table-column>
                     <el-table-column
-                    prop="OrderNo"
+                    prop="orderNo"
                     label="订单号"
                     width="400">
                     </el-table-column>
                     <el-table-column
-                    prop="province"
+                    prop="tableName"
                     label="桌号"
                     width="150">
                     </el-table-column>
-                    <el-table-column
+                    <!-- <el-table-column
                     prop="city"
                     label="总数量"
                     width="200">
-                    </el-table-column>
+                    </el-table-column> -->
                     <el-table-column
-                    prop="address"
+                    prop="totalprice"
                     label="总金额"
                     width="200">
                     </el-table-column>
@@ -35,7 +35,7 @@
                     fixed="right"
                     label="操作">
                     <template slot-scope="scope">
-                        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                        <el-button type="text" size="small" @click="handleClick(scope.row)" >查看</el-button>
                         <el-button type="text" size="small">结账</el-button>
                     </template>
                     </el-table-column>
@@ -54,12 +54,29 @@
     </div>
 </template>
 <script>
-
+import {listOrder} from "../api/order";
 export default {
     data() {
       return {
         activeName: '1',
+        loading: false,
+        orderList:[],
         }
+    },
+    created() {
+        this.getList();
+        console.log(this.$data);
+
+    },
+    methods: {
+      /** 查询食物列表 */
+        getList(){
+            this.loading = true;
+            listOrder(this.orderList).then((response) => {
+                this.orderList = response.data;
+                this.loading = false;
+            });
+        } 
     }
 }
 </script>

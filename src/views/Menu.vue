@@ -11,21 +11,6 @@
                         
                     </div>
                     <div  > 
-                         <!-- <div v-for="(food,foodNo) in orderItemList" :key="foodNo">
-                             <el-card class="box-card">
-                                <div slot="header" class="clearfix">
-                                    <span>{{}}</span>
-                                    <el-button style="float: right; padding: 1px 0" type="text">修改数量</el-button>
-                                    <el-button style="float: right; padding: 1px 0" type="text">删除</el-button>
-                                </div>
-                                <div >
-                                <span id="tran_food"></span><br>
-                                <span>单价：￥{{food.foodPrice}}</span>
-                                <span> &nbsp&nbsp&nbsp数量：x{{food.foodQuantity}}</span>
-                                
-                                </div>
-                            </el-card>
-                         </div> -->
                          <el-table 
                             :header-cell-style="{background:'#eef1f6',color:'#606266'}"
                             :data="orderItemList"
@@ -97,38 +82,6 @@
                         </el-tab-pane> -->
                         <el-tab-pane label="套餐" name="2">
                             <div style="margin-left:1%;margin-right:1%;height:420px;overflow:auto" >
-                                <!-- <el-row >            
-                                    <el-col :span="4"   >                
-                                        <div style="margin-top:15px">                    
-                                            <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
-                                                <div >                    
-                                                    <span>{{combo1.comboName}}</span><br>  
-                                                    <span>￥{{combo1.comboPrice}}</span><br>
-                                                    <div v-for="food in combo1comboItems" :key="foodId">
-                                                        {{food.food.foodName}}
-                                                    </div>                 
-                                                    <div class="bottom clearfix">                                 
-                                                        <el-button type="text" class="button" >添加</el-button>                    
-                                                    </div>                
-                                                </div>                
-                                            </el-card>                
-                                        </div>  
-                                        <div style="margin-top:15px">                    
-                                            <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
-                                                <div >                    
-                                                    <span>{{combo2.comboName}}</span><br>  
-                                                    <span>￥{{combo2.comboPrice}}</span><br> 
-                                                    <div v-for="food in combo2comboItems" :key="foodId">
-                                                        {{food.food.foodName}}
-                                                    </div>                 
-                                                    <div class="bottom clearfix">                                 
-                                                        <el-button type="text" class="button" >添加</el-button>                    
-                                                    </div>                
-                                                </div>                
-                                            </el-card>                
-                                        </div>          
-                                    </el-col>        
-                                    </el-row>     -->
                                     <div style="margin-top:10px">   
                                         <el-descriptions class="margin-top" title="1" :column="3" border>
                                             <template slot="extra">
@@ -231,9 +184,6 @@
                                             <template slot="label" >
                                                 套餐内容
                                             </template>
-                                            <!-- <div v-for="food in combo4.comboItems" :key="foodId">
-                                                            {{food.food.foodName}}
-                                                        </div>  -->
                                             <div >
                                                 <span>饮料:</span>
                                                 <template>
@@ -261,7 +211,7 @@
                                     <div style="margin-top:10px">   
                                         <el-descriptions class="margin-top" title="5" :column="3" border>
                                             <template slot="extra">
-                                                <el-button type="primary" size="small">添加</el-button>
+                                                <el-button type="primary" size="small"  @click="addComboOrder(combo5.comboNo,combo5_pasta,combo5_pizza,combo5_soup)">添加</el-button>
                                             </template>
                                             <el-descriptions-item>
                                             <template slot="label">
@@ -279,16 +229,35 @@
                                             <template slot="label" >
                                                 套餐内容
                                             </template>
-                                            <div v-for="food in combo5.comboItems" :key="foodId">
-                                                            {{food.food.foodName}}
-                                                        </div> 
+                                            <div >
+                                                <span>意面:</span>
+                                                <template>
+                                                    <input type="radio" v-model="combo5_pasta" :value="combo5.comboItems[0].food.foodName" >{{combo5.comboItems[0].food.foodName}}</input>
+                                                    <input type="radio" v-model="combo5_pasta" :value="combo5.comboItems[1].food.foodName" >{{combo5.comboItems[1].food.foodName}}</input>
+                                                    <input type="radio" v-model="combo5_pasta" :value="combo5.comboItems[2].food.foodName" >{{combo5.comboItems[2].food.foodName}}</input>
+                                                </template>
+                                            </div>
+                                            <div>
+                                                <span>披萨:</span>
+                                                <template>
+                                                    <input type="radio" v-model="combo5_pizza" :value="combo5.comboItems[3].food.foodName">{{combo5.comboItems[3].food.foodName}}</input>
+                                                    <input type="radio" v-model="combo5_pizza" :value="combo5.comboItems[4].food.foodName">{{combo5.comboItems[4].food.foodName}}</input>
+                                                </template>
+                                            </div>
+                                            <div>
+                                                <span>汤:</span>
+                                                <template>
+                                                    <input type="radio" v-model="combo5_soup" :value="combo5.comboItems[5].food.foodName">{{combo5.comboItems[5].food.foodName}}</input>
+                                                    <input type="radio" v-model="combo5_soup" :value="combo5.comboItems[6].food.foodName">{{combo5.comboItems[6].food.foodName}}</input>
+                                                </template>
+                                            </div>
                                             </el-descriptions-item>
                                         </el-descriptions>
                                     </div>
                                     <div style="margin-top:10px">   
                                         <el-descriptions class="margin-top" title="6" :column="3" border>
                                             <template slot="extra">
-                                                <el-button type="primary" size="small">添加</el-button>
+                                                <el-button type="primary" size="small"  @click="addComboOrder(combo6.comboNo,combo6_snack,combo6_sala,combo6_dessert)">添加</el-button>
                                             </template>
                                             <el-descriptions-item>
                                             <template slot="label">
@@ -306,9 +275,27 @@
                                             <template slot="label" >
                                                 套餐内容
                                             </template>
-                                            <div v-for="food in combo6.comboItems" :key="foodId">
-                                                            {{food.food.foodName}}
-                                                        </div> 
+                                            <div >
+                                                <span>小吃:</span>
+                                                <template>
+                                                    <input type="radio" v-model="combo6_snack" :value="combo6.comboItems[0].food.foodName" >{{combo6.comboItems[0].food.foodName}}</input>
+                                                    <input type="radio" v-model="combo6_snack" :value="combo6.comboItems[1].food.foodName" >{{combo6.comboItems[1].food.foodName}}</input>
+                                                </template>
+                                            </div>
+                                            <div>
+                                                <span>沙拉:</span>
+                                                <template>
+                                                    <input type="radio" v-model="combo6_sala" :value="combo6.comboItems[2].food.foodName">{{combo6.comboItems[2].food.foodName}}</input>
+                                                    <input type="radio" v-model="combo6_sala" :value="combo6.comboItems[3].food.foodName">{{combo6.comboItems[3].food.foodName}}</input>
+                                                </template>
+                                            </div>
+                                            <div>
+                                                <span>甜品:</span>
+                                                <template>
+                                                    <input type="radio" v-model="combo6_dessert" :value="combo6.comboItems[4].food.foodName">{{combo6.comboItems[4].food.foodName}}</input>
+                                                    <input type="radio" v-model="combo6_dessert" :value="combo6.comboItems[5].food.foodName">{{combo6.comboItems[5].food.foodName}}</input>
+                                                </template>
+                                            </div>
                                             </el-descriptions-item>
                                         </el-descriptions>
                                     </div>
@@ -381,7 +368,7 @@
                                         <span>{{steak.foodName}}</span><br>  
                                         <span>￥{{steak.foodPrice}}</span><br>                  
                                         <div class="bottom clearfix">                                 
-                                            <el-button type="text" class="button" @click="addSteakOrder(steak.foodNo)">添加</el-button>                    
+                                            <el-button type="text" class="button" @click="addSteak(steak.foodNo)">添加</el-button>                    
                                         </div>                
                                         </div>                
                                         </el-card>                
@@ -389,6 +376,34 @@
                                     </el-col>        
                                     </el-row>    
                             </div>
+                            <el-dialog title="请选择" :visible.sync="dialogFormVisible" :modal-append-to-body='false'>
+                                <el-form >
+                                    <el-form-item label="酱汁"  :label-width="formLabelWidth">
+                                    <el-select v-model="specification.sauce"  placeholder="请选择酱汁">
+                                        <el-option 
+                                        v-for="item in specificationlist[0].specificationItems"
+                                        :key="item.specificationId"
+                                        :label="item.specificationName"
+                                        :value="item.specificationName">
+                                        </el-option>
+                                    </el-select>
+                                    </el-form-item>
+                                    <el-form-item label="熟度"  :label-width="formLabelWidth">
+                                    <el-select v-model="specification.maturity"  placeholder="请选择酱汁">
+                                        <el-option 
+                                        v-for="item in specificationlist[1].specificationItems"
+                                        :key="item.specificationId"
+                                        :label="item.specificationName"
+                                        :value="item.specificationName">
+                                        </el-option>
+                                    </el-select>
+                                    </el-form-item>
+                                </el-form>
+                                <div slot="footer" class="dialog-footer">
+                                    <el-button @click="cancelhandleAddSteak">取 消</el-button>
+                                    <el-button type="primary" @click="addSteakOrder(specification.sauce,specification.maturity)">确 定</el-button>
+                                </div>
+                                </el-dialog>
                         </el-tab-pane>
                         <el-tab-pane label="沙拉" name="6">
                             <div style="margin-left:1%;margin-right:1%;height:420px ">
@@ -497,23 +512,30 @@
 </template>
 
 <script>
-import {listFood , getListByPage,findFoodNo} from '../api/food';
+import {listFood , getListByPage} from '../api/food';
 import {findTable} from "../api/table";
 import {addFood,deleteFood,comfirmOrder} from "../api/orderItem";
 import {gettableOrderVo,deleteVo} from "../api/order";
 import {IdCategory} from "../api/category";
 import {IdCombo} from "../api/combo";
-import axios from 'axios';
-import Qs from 'qs';
+import {listSpecification} from "../api/specification"
 export default {
     data() {
       return {
           // 遮罩层
         loading: false,
+        dialogFormVisible: false,
+        formLabelWidth: '120px',
         activeName: '2',
         combo4_drink: undefined,
         combo4_rice: undefined,
         combo4_snack: undefined,
+        combo5_pasta: undefined,
+        combo5_pizza: undefined,
+        combo5_soup: undefined,
+        combo6_snack: undefined,
+        combo6_sala: undefined,
+        combo6_dessert: undefined,
         combo1:[],
         combo2:[],
         combo3:[],
@@ -530,6 +552,7 @@ export default {
         salaList:[],
         dessertList:[],
         steakList:[],
+        specificationlist:[],
         tableOrderVo:{
           tableNo: undefined,
           orderNo: undefined,
@@ -553,6 +576,10 @@ export default {
             tableNo: undefined,
             orderNo: undefined,
         },
+        specification: {
+            sauce:undefined,
+            maturity:undefined,
+        },
        
         orderItemList:[], 
         orderItemList2:[],    
@@ -563,7 +590,7 @@ export default {
         pageSize:16,
         pageNum:1,
         food:null,
-        },
+        },  
         
       }
     },
@@ -583,7 +610,7 @@ export default {
                 this.foodList = response.data;
                 this.loading = false;
             });
-             this.getListByPage();
+            this.getListByPage();
             // listCategory(this.category).then((response) =>{
             //     this.category =response.data;
             // });
@@ -633,6 +660,9 @@ export default {
             IdCategory(9).then((response) =>{
                 this.steakList = response.data.foods;
             });
+            listSpecification(this.specificationlist).then((response) =>{
+                this.specificationlist = response.data;
+            });
         },
         getInfo(){
             let list = this;
@@ -670,25 +700,39 @@ export default {
                 
             }); 
         },
-        addComboOrder(comboNo,drink,rice,snack){
+        addComboOrder(comboNo,food1,food2,food3){
             this.tableOrderVo.tableNo=this.Orderitem2.tableNo;
             this.tableOrderVo.orderNo=this.Orderitem2.orderNo;
             this.tableOrderVo.foodNo=comboNo;
-            this.tableOrderVo.details=drink+rice+snack;
+            this.tableOrderVo.details=food1+food2+food3;
                 console.log(this.tableOrderVo)
             addFood(this.tableOrderVo).then((response) => {
                 this.orderItemList=response.data;
             }); 
-        //     console.log(drink);
-        //     console.log(rice);
-        //     console.log(snack);
+            console.log(food1);
+            console.log(food2);
+             console.log(food3);
             
         },
-        addSteakOrder(foodNo){
-            // this.tableOrderVo.tableNo=this.Orderitem2.tableNo;
-            // this.tableOrderVo.orderNo=this.Orderitem2.orderNo;
-            // this.tableOrderVo.foodNo=comboNo;
-            // this.tableOrderVo.details=
+        addSteak(foodNo){
+            this.dialogFormVisible= true;
+            this.tableOrderVo.tableNo=this.Orderitem2.tableNo;
+            this.tableOrderVo.orderNo=this.Orderitem2.orderNo;
+            this.tableOrderVo.foodNo=foodNo;
+        },
+        addSteakOrder(sauce,maturity){
+           this.tableOrderVo.details=sauce+maturity;
+           addFood(this.tableOrderVo).then((response) => {
+                this.orderItemList=response.data;
+                console.log(sauce+maturity);
+                console.log(this.tableOrderVo);
+            });
+            this.dialogFormVisible=false;
+        },
+        cancelhandleAddSteak(){
+            this.dialogFormVisible=false;
+            this.tableOrderVo.foodNo=undefined;
+            this.tableOrderVo.details=undefined;
         },
         deleteVo(tableId){
             deleteVo(tableId).then((response) =>{  

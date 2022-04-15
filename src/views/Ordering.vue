@@ -137,7 +137,9 @@ import {createOrder , gettableOrderVo} from "../api/order";
           for(var key in idList){
             gettableOrderVo(idList[key]).then((response) =>{
               zhuangtai2.push((typeof response.data)=="object" ? false : true);
-            
+              console.log(key)
+              console.log(response.data)
+              console.log(typeof response.data)
             });
           };
           
@@ -146,8 +148,10 @@ import {createOrder , gettableOrderVo} from "../api/order";
             for(var i in zhuangtai2){
               this.tableList[i].state=zhuangtai2[i]
             }
-          }, 1000);
-         
+          }, 1200);
+          setTimeout( ()=> {
+            this.$forceUpdate();
+          }, 2000)
         
         });
         // listStaff(this.queryParams).then((response) => {

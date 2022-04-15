@@ -13,7 +13,7 @@
         padding-right: 50px;
         padding-bottom: 20px;
       ">
-        <router-view></router-view>
+        <router-view v-if="isRouterAlive"></router-view>
       </el-main>
       <el-footer>
         <Navbar />
@@ -30,6 +30,24 @@ export default {
   components: {
     Navbar
   },
+    provide(){
+
+    return {
+
+      reload: this.reload
+    }
+  },
+    data() {
+
+    return {
+
+      isRouterAlive: true,
+
+    };
+
+  },
+
+  cread() {},
   methods: {
       reloadRouter(path) {
       this.$router.replace({
@@ -38,8 +56,17 @@ export default {
           nextPath: path
         }
       });
-    }
-    }
+    },
+    reload(){
+      this.isRouterAlive = false;
+      this.$nextTick(function(){
+        this.isRouterAlive = true;
+        });
+      }
+    },
+    mounted() {
+
+  },
 }
 </script>
 

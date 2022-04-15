@@ -23,7 +23,7 @@
                                 >
                             </el-table-column>
                             <el-table-column
-                            prop="name"
+                            prop="details"
                             label="名字"
                             >
                             </el-table-column>
@@ -112,7 +112,7 @@
                                     <div style="margin-top:10px">   
                                         <el-descriptions class="margin-top" title="2" :column="3" border>
                                             <template slot="extra">
-                                                <el-button type="primary" size="small">添加</el-button>
+                                                <el-button type="primary" size="small" @click="addFoodOrder(combo2.comboNo)">添加</el-button>
                                             </template>
                                             <el-descriptions-item>
                                             <template slot="label">
@@ -139,7 +139,7 @@
                                     <div style="margin-top:10px">   
                                         <el-descriptions class="margin-top" title="3" :column="3" border>
                                             <template slot="extra">
-                                                <el-button type="primary" size="small">添加</el-button>
+                                                <el-button type="primary" size="small" @click="addFoodOrder(combo3.comboNo)">添加</el-button>
                                             </template>
                                             <el-descriptions-item>
                                             <template slot="label">
@@ -682,7 +682,6 @@ export default {
             else{
                 let list = this;
                 list.oldtableOrder = this.$route.params.oldtableOrder;
-                
                 this.tablequeryParams.tableNo=this.oldtableOrder.tableNo;
                 this.Orderitem2 = this.oldtableOrder;
                 console.log(this.Orderitem2)
@@ -704,14 +703,23 @@ export default {
             this.tableOrderVo.tableNo=this.Orderitem2.tableNo;
             this.tableOrderVo.orderNo=this.Orderitem2.orderNo;
             this.tableOrderVo.foodNo=comboNo;
-            this.tableOrderVo.details=food1+food2+food3;
+            if(food1==null||food2==null||food3==null){
+                this.$notify.error({
+                title: '错误',
+                message: '每一项都需要选择'
+            });
+            }
+            else{
+                this.tableOrderVo.details=food1+","+food2+","+food3;
                 console.log(this.tableOrderVo)
-            addFood(this.tableOrderVo).then((response) => {
-                this.orderItemList=response.data;
-            }); 
-            console.log(food1);
-            console.log(food2);
-             console.log(food3);
+                addFood(this.tableOrderVo).then((response) => {
+                    this.orderItemList=response.data;
+                }); 
+                console.log(food1);
+                console.log(food2);
+                console.log(food3);
+            }
+            
             
         },
         addSteak(foodNo){
@@ -721,12 +729,14 @@ export default {
             this.tableOrderVo.foodNo=foodNo;
         },
         addSteakOrder(sauce,maturity){
-           this.tableOrderVo.details=sauce+maturity;
+           this.tableOrderVo.details=sauce+","+maturity;
            addFood(this.tableOrderVo).then((response) => {
                 this.orderItemList=response.data;
                 console.log(sauce+maturity);
                 console.log(this.tableOrderVo);
             });
+            this.specification.sauce=undefined;
+            this.specification.maturity=undefined;
             this.dialogFormVisible=false;
         },
         cancelhandleAddSteak(){

@@ -50,7 +50,7 @@
                             <el-descriptions-item label="总金额">{{IdorderList.totalprice}}</el-descriptions-item>
                             <el-descriptions-item label="食物明细">
                                 <div v-for="food in IdorderList.orderItems" :key="orderItemId">
-                                    {{food.foodNo}} ￥{{food.foodPrice}} x{{food.foodQuantity}}
+                                    {{food.details}} ￥{{food.foodPrice}} x{{food.foodQuantity}}
                                 </div> 
                             </el-descriptions-item>
                         </el-descriptions>
@@ -93,7 +93,7 @@
                                 桌子 {{IdorderList.tableName}} 的顾客本次共消费 {{IdorderList.totalprice}} 元，明细如下：
                             </div>
                             <div v-for="food in IdorderList.orderItems" :key="orderItemId">
-                                {{food.foodNo}} ￥{{food.foodPrice}} x{{food.foodQuantity}}
+                                {{food.details}} ￥{{food.foodPrice}} x{{food.foodQuantity}}
                             </div> 
                             <div slot="footer" class="dialog-footer">
                                 <el-button type="primary"  @click="AddCheckout()">确定支付</el-button>
@@ -150,11 +150,88 @@
                     </el-dialog>
             </el-tab-pane>
             <el-tab-pane label="挂账" name="2">
-
+                <el-table 
+                        :data="chargeList"
+                        border
+                        style="width: 100%">
+                        <el-table-column
+                        type="index"
+                        label="序号"
+                        width="120">
+                        </el-table-column>
+                        <el-table-column
+                        prop="chargeNo"
+                        label="挂账单编号"
+                        width="300">
+                        </el-table-column>
+                        <el-table-column
+                        prop="chargeUnit"
+                        label="挂账单位"
+                        width="250">
+                        </el-table-column>
+                        <el-table-column
+                        prop="chargeTel"
+                        label="挂账人联系方式"
+                        width="200">
+                        </el-table-column>
+                        <el-table-column
+                        prop="staffId"
+                        label="负责员工id"
+                        width="100">
+                        </el-table-column>
+                        <el-table-column
+                        fixed="right"
+                        label="操作">
+                        <template slot-scope="scope">
+                            <el-button type="text" size="small"  >查看</el-button>
+                        </template>
+                        </el-table-column>
+                    </el-table>
             </el-tab-pane>
-            <el-tab-pane label="已结账" name="3">
-
-            </el-tab-pane>
+                <el-tab-pane label="已结账" name="3">
+                    <el-table
+                        :data="billList"
+                        border
+                        style="width: 100%">
+                        <el-table-column
+                        type="index"
+                        label="序号"
+                        width="120">
+                        </el-table-column>
+                        <el-table-column
+                        prop="billNo"
+                        label="账单编号"
+                        width="300">
+                        </el-table-column>
+                        <el-table-column
+                        prop="payTime"
+                        label="支付时间"
+                        width="150">
+                        </el-table-column>
+                        <el-table-column
+                        prop="receivable"
+                        label="应收金额"
+                        width="150">
+                        </el-table-column>
+                        <el-table-column
+                        prop="receipts"
+                        label="实收金额"
+                        width="150">
+                        </el-table-column>
+                        <el-table-column
+                        prop="staffId"
+                        label="负责员工id"
+                        width="100">
+                        </el-table-column>
+                        <el-table-column
+                        fixed="right"
+                        label="操作">
+                        <template slot-scope="scope">
+                            <el-button type="text" size="small"  >查看</el-button>
+                        </template>
+                        </el-table-column>
+                    </el-table>
+                </el-tab-pane>
             <el-tab-pane label="全部订单" name="4">
 
             </el-tab-pane>
@@ -162,11 +239,13 @@
     </div>
 </template>
 <script>
-import {listOrder,IdOrder} from "../api/order";
+import {listOrder,IdOrder,unSettledList} from "../api/order";
+
 import {listStaff} from "../api/staff";
-import {payBill} from "../api/bill";
-import {payCharge} from "../api/charge";
+import {payBill,ListBill} from "../api/bill";
+import {payCharge,ListCharge} from "../api/charge";
 export default {
+    inject: ['reload'],
     data() {
         return {
             activeName: '1',
@@ -174,6 +253,8 @@ export default {
             orderList:[],
             IdorderList:[],
             staffList:[],
+            billList: [],
+            chargeList:[],
             dialogFormVisible: false,
             chargeFormVisible: false,
             CheckoutFormVisible: false,
@@ -191,6 +272,12 @@ export default {
                 chargeTel: undefined,
                 staffId: undefined,
                 totalprice: undefined,
+            },
+            TableOrderVo:{
+                tableNo: undefined,
+                orderNo: undefined,
+                foodNo: undefined,
+                details: undefined,
             },
             discount:undefined,
             options: [{
@@ -221,18 +308,28 @@ export default {
       /** 查询食物列表 */
         getList(){
             this.loading = true;
-            listOrder(this.orderList).then((response) => {
+            unSettledList(this.orderList).then((response) => {
                 this.orderList = response.data;
                 this.loading = false;
             });
+            
             listStaff(this.staffList).then((response) => {
                 this.staffList = response.data;
+            });
+            ListBill(this.billList).then((response) => {
+                this.billList = response.data;
+            });
+            ListCharge(this.chargeList).then((response) => {
+                this.chargeList = response.data;
             });
             
         },
         handleClick(index,orderList){
             this.IdorderList=orderList[index];
+            console.log(this.IdorderList);
             this.dialogFormVisible=true;
+            
+            
         }, 
         handleCharge(index,orderList){
             this.charge.orderId=orderList[index].orderId;
@@ -250,6 +347,7 @@ export default {
                 this.charge.staffId=undefined;
                 this.charge.totalprice=undefined;
                 this.chargeFormVisible=false;
+                this.reload();
             });
         },
         canclecharge(){
@@ -273,25 +371,37 @@ export default {
             this.AddCheckoutFormVisible=true;
         },
         selectChange(){
-            
             this.bill.receipts=(this.discount)*(this.IdorderList.totalprice);
-            console.log(this.discount)
-            console.log(this.IdorderList.totalprice)
-            console.log(this.bill.receipts)
         },
         handlecashpayment(){
-            payBill(this.bill.orderId,this.bill.receipts,this.bill.staffId).then((response) => {
-                this.AddCheckoutFormVisible=false;
-                this.bill.orderId=undefined;
-                this.bill.receipts=undefined;
-                this.bill.staffId=undefined;
-                
+            if(this.bill.staffId==null){
+                this.$notify.error({
+                    title: '错误',
+                    message: '请输入员工号'
+                });
+            }
+            else{
+                payBill(this.bill.orderId,this.bill.receipts,this.bill.staffId).then((response) => {
+                    this.AddCheckoutFormVisible=false;
+                    this.bill.orderId=undefined;
+                    this.bill.receipts=undefined;
+                    this.bill.staffId=undefined;
+                    this.reload();
             });
+            }
+            
         },
         handlemobilepayment(){
+            if(this.bill.staffId==null){
+                this.$notify.error({
+                    title: '错误',
+                    message: '请输入员工号'
+                });
+            }
+            else{
             this.AddCheckoutFormVisible=false;
             this.mobilepaymentVisible=true;
-            
+            }
         },
         Addmobilepayment(){
             payBill(this.bill.orderId,this.bill.receipts,this.bill.staffId).then((response) => {
@@ -299,6 +409,7 @@ export default {
                 this.bill.receipts=undefined;
                 this.bill.staffId=undefined;
                 this.mobilepaymentVisible=false;
+                this.reload();
             });
         },
         cancelCheckoutFormVisible(){
@@ -315,6 +426,9 @@ export default {
 }
 </script>
 <style >
- 
+    
+    .el-table__fixed-right::before {
+       background-color: transparent !important; 
+    }
 </style>
  

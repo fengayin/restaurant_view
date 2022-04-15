@@ -8,6 +8,15 @@ export function listOrder(query) {
   })
   
 }
+//查询未结账订单列表
+export function unSettledList(query) {
+  return request({
+    url: '/order/unSettledList',
+    method: 'get',
+    params: query
+  })
+  
+}
 
 
 //创建订单

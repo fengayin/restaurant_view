@@ -38,6 +38,15 @@ export function addFood(query){
     });
   } 
 
+// //查询未结账订单列表
+// export function IdOrderItem(tableName) {
+//   return request({
+//     url: '/orderItem/listWithName/?tableName='+tableName,
+//     method: 'get',
+//   })
+  
+// }
+  
   
   // //在缓存中删除菜品
   // export function deleteFood(tableNo,orderNo,foodNo){

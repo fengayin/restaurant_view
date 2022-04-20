@@ -38,16 +38,22 @@ export function addFood(query){
     });
   } 
 
-// //查询未结账订单列表
-// export function IdOrderItem(tableName) {
-//   return request({
-//     url: '/orderItem/listWithName/?tableName='+tableName,
-//     method: 'get',
-//   })
+//返回不同种类的后厨加工列表
+export function getMakeList(keyWord) {
+  return request({
+    url: '/orderItem/getMakeList/?keyWord='+keyWord,
+    method: 'get',
+  })
   
-// }
+}
+//减少已加工orderItem的数量
+export function hasMakeOne(orderItemId,keyWord) {
+  return request({
+    url: '/orderItem/hasMake/?orderItemId='+orderItemId+'&keyWord='+keyWord,
+    method: 'get',
+  })
   
-  
+}
   // //在缓存中删除菜品
   // export function deleteFood(tableNo,orderNo,foodNo){
   //   return request({

@@ -5,10 +5,10 @@
   			<router-link to="Ordering">点菜</router-link>
       </li>
       <li>
-        	<router-link to="Order" exact>订单详细</router-link>
+        	<router-link to="Order" exact>订单</router-link>
       </li>
       <li>
-        <router-link to="/3" exact>后厨制作</router-link>
+        <router-link to="Kitchen" exact>后厨制作</router-link>
       </li>
     </ul> 
   </nav>

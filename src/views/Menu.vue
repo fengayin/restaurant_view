@@ -85,7 +85,7 @@
                                     <div style="margin-top:10px">   
                                         <el-descriptions class="margin-top" title="1" :column="3" border>
                                             <template slot="extra">
-                                                <el-button type="primary" size="small" @click="addFoodOrder(combo1.comboNo)">添加</el-button>
+                                                <el-button type="primary" size="small" @click="addComboOrder(combo1.comboNo,combo1.comboItems[0].food.foodName,combo1.comboItems[1].food.foodName,combo1.comboItems[2].food.foodName)">添加</el-button>
                                             </template>
                                             <el-descriptions-item>
                                             <template slot="label">
@@ -112,7 +112,7 @@
                                     <div style="margin-top:10px">   
                                         <el-descriptions class="margin-top" title="2" :column="3" border>
                                             <template slot="extra">
-                                                <el-button type="primary" size="small" @click="addFoodOrder(combo2.comboNo)">添加</el-button>
+                                                <el-button type="primary" size="small" @click="addComboOrder(combo2.comboNo,combo2.comboItems[0].food.foodName,combo2.comboItems[1].food.foodName,combo2.comboItems[2].food.foodName)">添加</el-button>
                                             </template>
                                             <el-descriptions-item>
                                             <template slot="label">
@@ -139,7 +139,7 @@
                                     <div style="margin-top:10px">   
                                         <el-descriptions class="margin-top" title="3" :column="3" border>
                                             <template slot="extra">
-                                                <el-button type="primary" size="small" @click="addFoodOrder(combo3.comboNo)">添加</el-button>
+                                                <el-button type="primary" size="small" @click="addComboOrder(combo3.comboNo,combo3.comboItems[0].food.foodName,combo3.comboItems[1].food.foodName,combo3.comboItems[2].food.foodName)">添加</el-button>
                                             </template>
                                             <el-descriptions-item>
                                             <template slot="label">
@@ -714,6 +714,16 @@ export default {
                 console.log(this.tableOrderVo)
                 addFood(this.tableOrderVo).then((response) => {
                     this.orderItemList=response.data;
+                    this.combo4_drink=undefined;
+                    this.combo4_rice=undefined;
+                    this.combo4_snack=undefined;
+                    this.combo5_pasta=undefined;
+                    this.combo5_pizza= undefined;
+                    this.combo5_soup=undefined;
+                    this.combo6_snack= undefined;
+                    this.combo6_sala=undefined;
+                    this.combo6_dessert=undefined;
+
                 }); 
                 console.log(food1);
                 console.log(food2);
@@ -729,20 +739,30 @@ export default {
             this.tableOrderVo.foodNo=foodNo;
         },
         addSteakOrder(sauce,maturity){
-           this.tableOrderVo.details=sauce+","+maturity;
-           addFood(this.tableOrderVo).then((response) => {
-                this.orderItemList=response.data;
-                console.log(sauce+maturity);
-                console.log(this.tableOrderVo);
+            if(sauce==null||maturity==null){
+                this.$notify.error({
+                title: '错误',
+                message: '每一项都需要选择'
             });
-            this.specification.sauce=undefined;
-            this.specification.maturity=undefined;
-            this.dialogFormVisible=false;
+            }
+            else{
+            this.tableOrderVo.details=sauce+","+maturity;
+            addFood(this.tableOrderVo).then((response) => {
+                    this.orderItemList=response.data;
+                    console.log(sauce+maturity);
+                    console.log(this.tableOrderVo);
+                });
+                this.specification.sauce=undefined;
+                this.specification.maturity=undefined;
+                this.dialogFormVisible=false;
+            }
         },
         cancelhandleAddSteak(){
             this.dialogFormVisible=false;
             this.tableOrderVo.foodNo=undefined;
             this.tableOrderVo.details=undefined;
+            this.specification.sauce=undefined;
+            this.specification.maturity=undefined;
         },
         deleteVo(tableId){
             deleteVo(tableId).then((response) =>{  
@@ -761,7 +781,7 @@ export default {
             comfirmOrder(this.tableOrderVo).then((response) =>{
                this.$router.push({name:'Ordering'})
             })
-            // IdOrder(this.orderItemList.orderId)
+           
         },
 
         getListByPage(){

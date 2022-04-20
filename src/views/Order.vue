@@ -339,16 +339,24 @@ export default {
 
         },
         Addcharge(){
-            payCharge(this.charge.orderId,this.charge.chargeUnit,this.charge.chargeTel,this.charge.staffId).then((response) => {
-                this.charge.orderId=undefined;
-                this.charge.orderNo=undefined;
-                this.charge.chargeUnit=undefined;
-                this.charge.chargeTel=undefined;
-                this.charge.staffId=undefined;
-                this.charge.totalprice=undefined;
-                this.chargeFormVisible=false;
-                this.reload();
-            });
+            if(this.charge.staffId==null){
+                this.$notify.error({
+                    title: '错误',
+                    message: '请输入员工号'
+                });
+            }
+            else{
+                payCharge(this.charge.orderId,this.charge.chargeUnit,this.charge.chargeTel,this.charge.staffId).then((response) => {
+                    this.charge.orderId=undefined;
+                    this.charge.orderNo=undefined;
+                    this.charge.chargeUnit=undefined;
+                    this.charge.chargeTel=undefined;
+                    this.charge.staffId=undefined;
+                    this.charge.totalprice=undefined;
+                    this.chargeFormVisible=false;
+                    this.reload();
+                });
+            }
         },
         canclecharge(){
             this.charge.orderId=undefined;

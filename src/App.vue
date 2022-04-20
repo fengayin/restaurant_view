@@ -26,27 +26,19 @@
 import Navbar from '@/views/Navbar'
 export default {
   name: 'app',
-  
   components: {
     Navbar
   },
     provide(){
-
     return {
-
       reload: this.reload
     }
   },
     data() {
-
     return {
-
       isRouterAlive: true,
-
     };
-
   },
-
   cread() {},
   methods: {
       reloadRouter(path) {

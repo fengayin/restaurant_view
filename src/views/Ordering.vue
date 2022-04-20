@@ -18,9 +18,6 @@
                 </img>
               </div>
             <div >
-              <!-- <el-form  >
-                  <el-form-item   >{{ table.tableNo }}</el-form-item>
-              </el-form> -->
               <span>{{table.tableName}}</span>
               <div class="bottom clearfix">
                 <el-button type="text"  @click="handleAddTable(table.tableId) " class="button" >点餐</el-button>

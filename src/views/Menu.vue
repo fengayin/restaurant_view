@@ -257,7 +257,7 @@
                                     <div style="margin-top:10px">   
                                         <el-descriptions class="margin-top" title="6" :column="3" border>
                                             <template slot="extra">
-                                                <el-button type="primary" size="small"  @click="addComboOrder(combo6.comboNo,combo6_snack,combo6_sala,combo6_dessert)">添加</el-button>
+                                                <el-button type="primary" size="small"  @click="addComboOrder(combo6.comboNo,combo6_snack,combo6_salad,combo6_dessert)">添加</el-button>
                                             </template>
                                             <el-descriptions-item>
                                             <template slot="label">
@@ -285,8 +285,8 @@
                                             <div>
                                                 <span>沙拉:</span>
                                                 <template>
-                                                    <input type="radio" v-model="combo6_sala" :value="combo6.comboItems[2].food.foodName">{{combo6.comboItems[2].food.foodName}}</input>
-                                                    <input type="radio" v-model="combo6_sala" :value="combo6.comboItems[3].food.foodName">{{combo6.comboItems[3].food.foodName}}</input>
+                                                    <input type="radio" v-model="combo6_salad" :value="combo6.comboItems[2].food.foodName">{{combo6.comboItems[2].food.foodName}}</input>
+                                                    <input type="radio" v-model="combo6_salad" :value="combo6.comboItems[3].food.foodName">{{combo6.comboItems[3].food.foodName}}</input>
                                                 </template>
                                             </div>
                                             <div>
@@ -408,14 +408,14 @@
                         <el-tab-pane label="沙拉" name="6">
                             <div style="margin-left:1%;margin-right:1%;height:420px ">
                                 <el-row>            
-                                    <el-col :span="4" v-for="(sala) in salaList" :key="sala.foodId" :offset="1" >                
+                                    <el-col :span="4" v-for="(salad) in saladList" :key="salad.foodId" :offset="1" >                
                                     <div style="margin-top:15px">                    
                                         <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
                                         <div>                    
-                                        <span>{{sala.foodName}}</span><br>  
-                                        <span>￥{{sala.foodPrice}}</span><br>                  
+                                        <span>{{salad.foodName}}</span><br>  
+                                        <span>￥{{salad.foodPrice}}</span><br>                  
                                         <div class="bottom clearfix">                                 
-                                            <el-button type="text" class="button" @click="addFoodOrder(sala.foodNo)">添加</el-button>                    
+                                            <el-button type="text" class="button" @click="addFoodOrder(salad.foodNo)">添加</el-button>                    
                                         </div>                
                                         </div>                
                                         </el-card>                
@@ -534,7 +534,7 @@ export default {
         combo5_pizza: undefined,
         combo5_soup: undefined,
         combo6_snack: undefined,
-        combo6_sala: undefined,
+        combo6_salad: undefined,
         combo6_dessert: undefined,
         combo1:[],
         combo2:[],
@@ -549,7 +549,7 @@ export default {
         snackList:[],
         pizzaList:[],
         soupList:[],
-        salaList:[],
+        saladList:[],
         dessertList:[],
         steakList:[],
         specificationlist:[],
@@ -652,7 +652,7 @@ export default {
                 this.soupList = response.data.foods;
             });
             IdCategory(7).then((response) =>{
-                this.salaList = response.data.foods;
+                this.saladList = response.data.foods;
             });
             IdCategory(8).then((response) =>{
                 this.dessertList = response.data.foods;
@@ -721,7 +721,7 @@ export default {
                     this.combo5_pizza= undefined;
                     this.combo5_soup=undefined;
                     this.combo6_snack= undefined;
-                    this.combo6_sala=undefined;
+                    this.combo6_salad=undefined;
                     this.combo6_dessert=undefined;
 
                 }); 

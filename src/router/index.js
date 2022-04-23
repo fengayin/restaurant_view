@@ -22,12 +22,20 @@ const routes = [
     path: '/order',
     name: 'Order',
     component:() => import("../views/Order.vue"),
+    children:[
+      {
+          path: '/foodCount',
+          name: 'FoodCount',
+          component:() => import("../views/FoodCount.vue"),
+      },
+    ]
   },
   {
     path: '/kitchen',
     name: 'Kitchen',
     component:() => import("../views/Kitchen.vue"),
   },
+  
   
 ];
 

@@ -27,6 +27,22 @@
         </el-col>
       </div>
     </div>
+    <!-- <div class="tablecard">
+      <el-card shadow="never">
+        <div v-if="table.state == true" >
+                <img class="img"  
+                  src="@/assets/not_use.png" 
+                  >
+              </img>
+              </div>
+              <div v-else-if="table.state == false">
+                <img class="img2" 
+                  src="@/assets/in_use.png"
+                  >
+                </img>
+              </div>
+      </el-card>
+    </div> -->
     <el-dialog title="请选择" :visible.sync="dialogFormVisible" :modal-append-to-body='false'>
       <el-form :model="tableOrderVo,queryParams"
           ref="queryForm">
@@ -155,7 +171,10 @@ import {createOrder , gettableOrderVo} from "../api/order";
         //   this.staffList = response.data;
         //   this.loading = false;
         // });
-        
+          // listTable(this.tableList).then((response) => {
+          //   this.tableList = response.data;
+          //   this.loading = false;
+          // });
       },
       handleAddTable(val){
         this.tableOrderVo.tableId=parseInt(val);

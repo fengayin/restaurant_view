@@ -1,6 +1,6 @@
 <template>
     <div class="order">
-        <el-tabs v-model="activeName" style="height:520px ">
+        <el-tabs v-model="activeName" style="height:600px ">
             <el-tab-pane label="未结账" name="1">
                 <el-table
                     :data="orderList"
@@ -232,8 +232,20 @@
                         </el-table-column>
                     </el-table>
                 </el-tab-pane>
-            <el-tab-pane label="全部订单" name="4">
-
+            <el-tab-pane label="报表" name="4">
+                <el-container style="border: 1px solid #eee">
+                    <el-aside style="width:150px;height:520px;overflow:hidden"  >
+                        <el-menu :default-openeds="['1']" :default-active="this.$route.path">
+                        <el-menu-item index="../src/views/FoodCount.vue"@click="reloadRouter('/foodCount')">门店业绩报表</el-menu-item>
+                        <el-menu-item index="../src/views/About.vue" @click="reloadRouter('/about')">菜品类型业绩报表</el-menu-item>
+                        </el-menu>
+                    </el-aside>
+                    <el-container>
+                        <el-main style="height:520px;">
+                        <router-view></router-view>
+                        </el-main>
+                    </el-container>
+                </el-container>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -428,7 +440,15 @@ export default {
             this.bill.receipts=undefined;
             this.bill.staffId=undefined;
             this.AddCheckoutFormVisible=false;
-        }
+        },
+        reloadRouter(path) {
+            this.$router.replace({
+                path:path,
+                query: {
+                nextPath: path
+                }
+            });
+        },
 
     },
 }
@@ -438,5 +458,6 @@ export default {
     .el-table__fixed-right::before {
        background-color: transparent !important; 
     }
+    
 </style>
  

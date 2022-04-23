@@ -10,7 +10,7 @@
                                     <div>     
                                         <span>{{index+1}}</span><br> 
                                         <span>{{combo.details}}</span><br>                   
-                                        <span>x{{combo.foodQuantity}}</span><br>                   
+                                        <span>x{{combo.willMake}}</span><br>                   
                                         <div class="bottom clearfix">                                 
                                             <el-button type="text" class="button" @click="handleMake(combo.orderItemId,'combo')" >制作完成</el-button>                    
                                         </div>                
@@ -30,7 +30,7 @@
                                     <div>     
                                         <span>{{index+1}}</span><br> 
                                         <span>{{rice.details}}</span><br>                   
-                                        <span>x{{rice.foodQuantity}}</span><br>                   
+                                        <span>x{{rice.willMake}}</span><br>                   
                                         <div class="bottom clearfix">                                 
                                             <el-button type="text" class="button" @click="handleMake(rice.orderItemId,'rice')" >制作完成</el-button>                    
                                         </div>                
@@ -50,7 +50,7 @@
                                     <div>     
                                         <span>{{index+1}}</span><br> 
                                         <span>{{pasta.details}}</span><br>                   
-                                        <span>x{{pasta.foodQuantity}}</span><br>                   
+                                        <span>x{{pasta.willMake}}</span><br>                   
                                         <div class="bottom clearfix">                                 
                                             <el-button type="text" class="button" @click="handleMake(pasta.orderItemId,'pasta')" >制作完成</el-button>                    
                                         </div>                
@@ -70,7 +70,7 @@
                                     <div>     
                                         <span>{{index+1}}</span><br> 
                                         <span>{{pizza.details}}</span><br>                   
-                                        <span>x{{pizza.foodQuantity}}</span><br>                   
+                                        <span>x{{pizza.willMake}}</span><br>                   
                                         <div class="bottom clearfix">                                 
                                             <el-button type="text" class="button" @click="handleMake(pizza.orderItemId,'pizza')" >制作完成</el-button>                    
                                         </div>                
@@ -90,7 +90,7 @@
                                     <div>     
                                         <span>{{index+1}}</span><br> 
                                         <span>{{steak.details}}</span><br>                   
-                                        <span>x{{steak.foodQuantity}}</span><br>                   
+                                        <span>x{{steak.willMake}}</span><br>                   
                                         <div class="bottom clearfix">                                 
                                             <el-button type="text" class="button" @click="handleMake(steak.orderItemId,'steak')" >制作完成</el-button>                    
                                         </div>                
@@ -104,15 +104,15 @@
             <el-tab-pane label="沙拉" name="6">
                 <div style="margin-left:1%;margin-right:1%;height:420px ">
                     <el-row>            
-                        <el-col :span="4" v-for="(sala,index) in salaList" :key="sala.foodId"  :offset="1" >                
+                        <el-col :span="4" v-for="(salad,index) in saladList" :key="salad.foodId"  :offset="1" >                
                             <div style="margin-top:15px">                    
                                 <el-card :body-style="{ padding: '0px'}" shadow="hover">                                        
                                     <div>     
                                         <span>{{index+1}}</span><br> 
-                                        <span>{{sala.details}}</span><br>                   
-                                        <span>x{{sala.foodQuantity}}</span><br>                   
+                                        <span>{{salad.details}}</span><br>                   
+                                        <span>x{{salad.willMake}}</span><br>                   
                                         <div class="bottom clearfix">                                 
-                                            <el-button type="text" class="button" @click="handleMake(sala.orderItemId,'sala')" >制作完成</el-button>                    
+                                            <el-button type="text" class="button" @click="handleMake(salad.orderItemId,'salad')" >制作完成</el-button>                    
                                         </div>                
                                     </div>                
                                 </el-card>                
@@ -130,7 +130,7 @@
                                     <div>     
                                         <span>{{index+1}}</span><br> 
                                         <span>{{snack.details}}</span><br>                   
-                                        <span>x{{snack.foodQuantity}}</span><br>                   
+                                        <span>x{{snack.willMake}}</span><br>                   
                                         <div class="bottom clearfix">                                 
                                             <el-button type="text" class="button" @click="handleMake(snack.orderItemId,'snack')" >制作完成</el-button>                    
                                         </div>                
@@ -150,7 +150,7 @@
                                     <div>     
                                         <span>{{index+1}}</span><br> 
                                         <span>{{dessert.details}}</span><br>                   
-                                        <span>x{{dessert.foodQuantity}}</span><br>                   
+                                        <span>x{{dessert.willMake}}</span><br>                   
                                         <div class="bottom clearfix">                                 
                                             <el-button type="text" class="button" @click="handleMake(dessert.orderItemId,'dessert')" >制作完成</el-button>                    
                                         </div>                
@@ -170,7 +170,7 @@
                                     <div>     
                                         <span>{{index+1}}</span><br> 
                                         <span>{{soup.details}}</span><br>                   
-                                        <span>x{{soup.foodQuantity}}</span><br>                   
+                                        <span>x{{soup.willMake}}</span><br>                   
                                         <div class="bottom clearfix">                                 
                                             <el-button type="text" class="button" @click="handleMake(soup.orderItemId,'soup')" >制作完成</el-button>                    
                                         </div>                
@@ -190,7 +190,7 @@
                                     <div>     
                                         <span>{{index+1}}</span><br> 
                                         <span>{{drink.details}}</span><br>                   
-                                        <span>x{{drink.foodQuantity}}</span><br>                   
+                                        <span>x{{drink.willMake}}</span><br>                   
                                         <div class="bottom clearfix">                                 
                                             <el-button type="text" class="button" @click="handleMake(drink.orderItemId,'drink')" >制作完成</el-button>                    
                                         </div>                
@@ -219,7 +219,7 @@ export default {
         snackList:[],
         pizzaList:[],
         soupList:[],
-        salaList:[],
+        saladList:[],
         dessertList:[],
         steakList:[],
       };
@@ -255,8 +255,8 @@ export default {
             getMakeList("soup").then((response) => {
                 this.soupList = response.data;
             });
-            getMakeList("sala").then((response) => {
-                this.salaList = response.data;
+            getMakeList("salad").then((response) => {
+                this.saladList = response.data;
             });
             getMakeList("dessert").then((response) => {
                 this.dessertList = response.data;
@@ -302,9 +302,9 @@ export default {
                     this.soupList = response.data;
                 }); 
             }
-            else if(keyWord=="sala"){
+            else if(keyWord=="salad"){
                 hasMakeOne(orderItemId,keyWord).then((response) => {
-                    this.salaList = response.data;
+                    this.saladList = response.data;
                 }); 
             }
             else if(keyWord=="dessert"){

@@ -16,3 +16,12 @@ export function payCharge(orderId,chargeUnit,chargeTel,staffId){
         method:"get",
     });
   }
+
+  //销售年月日报表
+export function chargecountSummaryCalculation(span) {
+  return request({
+    url: '/charge/countSummaryCalculation?span='+span,
+    method: 'get',
+  })
+  
+}

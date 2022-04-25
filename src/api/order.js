@@ -54,4 +54,11 @@ export function deleteVo(tableId) {
   })
   
 }
-
+//销售年月日报表
+export function countSummaryCalculation(span) {
+  return request({
+    url: '/order/countSummaryCalculation?span='+span,
+    method: 'get',
+  })
+  
+}

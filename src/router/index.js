@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
+
+
 const routes = [
   {
     path: '/',
@@ -24,12 +26,32 @@ const routes = [
     component:() => import("../views/Order.vue"),
     children:[
       {
-          path: '/foodCount',
-          name: 'FoodCount',
-          component:() => import("../views/FoodCount.vue"),
+          path: '/categoryCount',
+          name: 'CategoryCount',
+          component:() => import("../views/Count/CategoryCount.vue"),
       },
+      {
+        path: '/comboCount',
+        name: 'ComboCount',
+        component:() => import("../views/Count/ComboCount.vue"),
+    },
+    {
+      path: '/foodCount',
+      name: 'FoodCount',
+      component:() => import("../views/Count/FoodCount.vue"),
+    },
+    {
+      path: '/orderSumCount',
+      name: 'OrderSumCount',
+      component:() => import("../views/Count/OrderSumCount.vue"),
+    },
     ]
   },
+//   {
+//     path: '/foodCount',
+//     name: 'FoodCount',
+//     component:() => import("../views/FoodCount.vue"),
+// },
   {
     path: '/kitchen',
     name: 'Kitchen',
@@ -39,8 +61,12 @@ const routes = [
   
 ];
 
+
 const router = new VueRouter({
+  mode:'history',
   routes,
 });
+
+
 
 export default router;

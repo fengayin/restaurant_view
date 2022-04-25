@@ -54,6 +54,35 @@ export function hasMakeOne(orderItemId,keyWord) {
   })
   
 }
+//菜品种类报表
+export function countFoodCategoryByCategoryNo(query) {
+  return request({
+    url: '/orderItem/countFoodCategoryByCategoryNo',
+    method: 'get',
+    data:query,
+  })
+  
+}
+//套餐报表
+export function countCombo(query) {
+  return request({
+    url: '/orderItem/countCombo',
+    method: 'get',
+    data:query,
+  })
+  
+}
+//统计每一类中不同食物的报表
+export function countFoodByCategoryNo(categoryNo) {
+  return request({
+    url: '/orderItem/countFoodByCategoryNo?categoryNo='+categoryNo,
+    method: 'get',
+  })
+  
+}
+
+
+
   // //在缓存中删除菜品
   // export function deleteFood(tableNo,orderNo,foodNo){
   //   return request({

@@ -1,26 +1,33 @@
 <template>
-  <div ref="main" style="margin: 0 auto;" />
+ 
+  <div ref="main" style="whith:100%;height:100%;margin: 0 auto;" />
 </template>
 
 <script>
-
+import {countCombo,} from '../../api/orderItem'
 export default {
-  name: 'foodCount',
+  name:'ComboCount',
   data() {
     return {
     }
   },
   created() {},
   mounted() {
-    this.initEcharts()
+    countCombo().then((response)=>{
+      const countCombo=response.data
+      
+      this.initEcharts(countCombo)
+      console.log(countCombo)
+    })
+    
   },
   methods: {
-    initEcharts() {
+    initEcharts(countCombo) {
       var myChart = this.$echarts.init(this.$refs.main)
       var option = {
         title: {
-          text: '读者最喜爱图书分析',
-          subtext: '按图书类型',
+          text: '套餐业绩表',
+          subtext: '按套餐分类',
           left: 'center'
         },
         tooltip: {
@@ -32,16 +39,10 @@ export default {
         },
         series: [
           {
-            name: '占所有图书的',
+            name: '占所有套餐的',
             type: 'pie',
             radius: '50%',
-            data: [
-              { value: 1048, name: 'Search Engine' },
-              { value: 735, name: 'Direct' },
-              { value: 580, name: 'Email' },
-              { value: 484, name: 'Union Ads' },
-              { value: 300, name: 'Video Ads' }
-            ],
+            data: countCombo,
             emphasis: {
               itemStyle: {
                 shadowBlur: 10,
@@ -57,3 +58,5 @@ export default {
   }
 }
 </script>
+
+

@@ -15,3 +15,4 @@ export function IdCategory(categoryId) {
     method: 'get',
   })
 }
+

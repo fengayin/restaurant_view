@@ -15,3 +15,12 @@ export function payBill(orderId,receipts,staffId){
         method:"get",
     });
   }
+
+//销售年月日报表
+export function billcountSummaryCalculation(span) {
+  return request({
+    url: '/bill/countSummaryCalculation?span='+span,
+    method: 'get',
+  })
+  
+}

@@ -232,16 +232,65 @@
                         </el-table-column>
                     </el-table>
                 </el-tab-pane>
-            <el-tab-pane label="报表" name="4">
+            <el-tab-pane label="全部订单" name="4">
+                    <el-table
+                        :data="listOrder"
+                        border
+                        style="width: 100%">
+                        <el-table-column
+                        type="index"
+                        label="序号"
+                        width="120">
+                        </el-table-column>
+                        <el-table-column
+                        prop="orderNo"
+                        label="订单编号"
+                        width="300">
+                        </el-table-column>
+                        <el-table-column
+                        prop="tableName"
+                        label="桌号"
+                        width="150">
+                        </el-table-column>
+                        <el-table-column
+                        prop="totalprice"
+                        label="总金额"
+                        width="150">
+                        </el-table-column>
+                        <el-table-column
+                        fixed="right"
+                        label="操作">
+                        <template slot-scope="scope">
+                            <el-button type="text" size="small"  >查看</el-button>
+                        </template>
+                        </el-table-column>
+                    </el-table>
+                </el-tab-pane>    
+            <el-tab-pane label="报表" name="5">
                 <el-container style="border: 1px solid #eee">
-                    <el-aside style="width:150px;height:520px;overflow:hidden"  >
-                        <el-menu :default-openeds="['1']" :default-active="this.$route.path">
-                        <el-menu-item index="../src/views/FoodCount.vue"@click="reloadRouter('/foodCount')">门店业绩报表</el-menu-item>
-                        <el-menu-item index="../src/views/About.vue" @click="reloadRouter('/about')">菜品类型业绩报表</el-menu-item>
+                    <el-aside style="width:250px;height:500px;overflow:hidden"  >
+                        <el-menu :default-openeds="['1']">
+                        <el-menu-item index="OrderSumCount" @click="reloadRouter('/orderSumCount')">门店业绩报表</el-menu-item>
+
+                        <el-submenu index="1" >
+                            <template slot="title">
+                                菜品业绩报表
+                            </template>
+                            <el-menu-item-group>
+                                <el-menu-item index="CategoryCount" @click="reloadRouter('/categoryCount')" >菜品类型业绩报表</el-menu-item>
+                            </el-menu-item-group>
+                            <el-menu-item-group>
+                                <el-menu-item index="ComboCount" @click="reloadRouter('/comboCount')">套餐业绩报表</el-menu-item>
+                            </el-menu-item-group>
+                            <el-menu-item-group>
+                                <el-menu-item index="FoodCount" @click="reloadRouter('/foodCount')">食品业绩报表</el-menu-item>
+                            </el-menu-item-group>
+                            </el-submenu>
+                        </el-submenu>
                         </el-menu>
                     </el-aside>
                     <el-container>
-                        <el-main style="height:520px;">
+                        <el-main style="height:500px;">
                         <router-view></router-view>
                         </el-main>
                     </el-container>
@@ -267,6 +316,7 @@ export default {
             staffList:[],
             billList: [],
             chargeList:[],
+            listOrder:[],
             dialogFormVisible: false,
             chargeFormVisible: false,
             CheckoutFormVisible: false,
@@ -334,7 +384,9 @@ export default {
             ListCharge(this.chargeList).then((response) => {
                 this.chargeList = response.data;
             });
-            
+            listOrder(this.listOrder).then((response) => {
+                this.listOrder = response.data;
+            });
         },
         handleClick(index,orderList){
             this.IdorderList=orderList[index];
@@ -441,6 +493,10 @@ export default {
             this.bill.staffId=undefined;
             this.AddCheckoutFormVisible=false;
         },
+        // reloadRouter(path) {
+
+        //     console.log(this.$route.path)
+        // },
         reloadRouter(path) {
             this.$router.replace({
                 path:path,
@@ -449,6 +505,7 @@ export default {
                 }
             });
         },
+        
 
     },
 }

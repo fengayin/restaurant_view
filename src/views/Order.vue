@@ -245,27 +245,43 @@
                         <el-table-column
                         prop="orderNo"
                         label="订单编号"
-                        width="300">
+                        width="400">
                         </el-table-column>
                         <el-table-column
                         prop="tableName"
                         label="桌号"
-                        width="150">
+                        width="250">
                         </el-table-column>
                         <el-table-column
                         prop="totalprice"
                         label="总金额"
-                        width="150">
+                        width="250">
                         </el-table-column>
                         <el-table-column
                         fixed="right"
                         label="操作">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small"  >查看</el-button>
+                            <el-button type="text" size="small"  @click="OrderCheck(scope.$index,listOrder)">查看</el-button>
                         </template>
                         </el-table-column>
                     </el-table>
-                </el-tab-pane>    
+                    <el-dialog title="订单信息" :visible.sync="OrderVisible" :modal-append-to-body='false'>
+                    <div>
+                        <el-descriptions class="margin-top" direction="vertical" :column="4"  >
+                            <el-descriptions-item label="订单号">{{IdorderList.orderNo}}</el-descriptions-item>
+                            <el-descriptions-item label="桌号">{{IdorderList.tableName}}</el-descriptions-item>
+                            <el-descriptions-item label="下单时间">{{IdorderList.orderTime}}</el-descriptions-item>
+                            <el-descriptions-item label="总金额">{{IdorderList.totalprice}}</el-descriptions-item>
+                            <el-descriptions-item label="食物明细">
+                                <div v-for="food in IdorderList.orderItems" :key="orderItemId">
+                                    {{food.details}} ￥{{food.foodPrice}} x{{food.foodQuantity}}
+                                </div> 
+                            </el-descriptions-item>
+                        </el-descriptions>
+                    </div>
+                    </el-dialog>
+                </el-tab-pane>   
+
             <el-tab-pane label="报表" name="5">
                 <el-container style="border: 1px solid #eee">
                     <el-aside style="width:250px;height:500px;overflow:hidden"  >
@@ -322,6 +338,7 @@ export default {
             CheckoutFormVisible: false,
             AddCheckoutFormVisible:false,
             mobilepaymentVisible:false,
+            OrderVisible:false,
             bill:{
                 orderId:undefined,
                 receipts:undefined,
@@ -492,6 +509,11 @@ export default {
             this.bill.receipts=undefined;
             this.bill.staffId=undefined;
             this.AddCheckoutFormVisible=false;
+        },
+        OrderCheck(index,listOrder){
+             this.IdorderList=listOrder[index];
+            console.log(this.IdorderList);
+            this.OrderVisible=true;
         },
         // reloadRouter(path) {
 

@@ -6,7 +6,7 @@
                     <div style="text-align: left; height:60px ">
                         <span lable="桌号">桌号:{{tablequeryParams.tableNo}}</span><br>
                         <span>人数：</span>
-                        <el-input-number v-model="Orderitem.customer_num" size="mini" :min="1" :max="10"></el-input-number><br>
+                        <el-input-number v-model="Orderitem.customer_num" size="mini" :min="1" :max="10" @change="customerNumchange(Orderitem.customer_num)"></el-input-number><br>
                         
                         
                     </div>
@@ -519,6 +519,7 @@ import {gettableOrderVo,deleteVo} from "../api/order";
 import {IdCategory} from "../api/category";
 import {IdCombo} from "../api/combo";
 import {listSpecification} from "../api/specification"
+import {updateCustomerNum} from "../api/customer"
 export default {
     data() {
       return {
@@ -688,6 +689,13 @@ export default {
             }
             
             
+        },
+        customerNumchange(customer_num){
+            this.Orderitem.customer_num=customer_num
+            updateCustomerNum(this.Orderitem2.orderNo,this.Orderitem.customer_num).then((response)=>{
+                console.log(this.Orderitem2.orderNo)
+                console.log(this.Orderitem.customer_num)
+            })
         },
         addFoodOrder(foodNo){
             this.tableOrderVo.tableNo=this.Orderitem2.tableNo;

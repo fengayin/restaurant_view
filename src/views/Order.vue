@@ -285,10 +285,21 @@
             <el-tab-pane label="报表" name="5">
                 <el-container style="border: 1px solid #eee">
                     <el-aside style="width:250px;height:500px;overflow:hidden"  >
-                        <el-menu :default-openeds="['1']">
-                        <el-menu-item index="OrderSumCount" @click="reloadRouter('/orderSumCount')">门店业绩报表</el-menu-item>
-
-                        <el-submenu index="1" >
+                        <el-menu >
+                        <el-submenu index="1" style="width:100%">
+                            <template slot="title">
+                                门店业绩报表
+                            </template>
+                            <el-menu-item-group>
+                                <el-menu-item index="OrderSumCount" @click="reloadRouter('/orderSumCount')">全部业绩报表</el-menu-item>
+                            </el-menu-item-group>
+                            <el-menu-item-group>
+                                <el-menu-item index="OptionalOrderSumCount" @click="reloadRouter('/optionalorderSumCount')">查询业绩报表</el-menu-item>
+                            </el-menu-item-group>
+                            
+                            </el-submenu>
+                        </el-submenu>
+                        <el-submenu index="2" style="width:100%">
                             <template slot="title">
                                 菜品业绩报表
                             </template>
@@ -358,7 +369,6 @@ export default {
                 foodNo: undefined,
                 details: undefined,
             },
-            discount:undefined,
             options: [{
                 value: 0.5,
                 label: "五折"
@@ -375,7 +385,7 @@ export default {
                 value: 1,
                 label: "原价"
                 }],
-                value: ''
+                discount: ''
         }
     },
     created() {

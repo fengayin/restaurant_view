@@ -62,3 +62,20 @@ export function countSummaryCalculation(span) {
   })
   
 }
+
+//查询某一年的各月销售、查询某一月的各日销售
+export function optionalSummaryCalculation(year,month) {
+  return request({
+    url: '/order/optionalSummaryCalculation?year='+year+'&month='+month,
+    method: 'get',
+  })
+  
+}
+//单独查询某一年或者某一月、某一日的数据
+export function showCalculation(year,month,day) {
+  return request({
+    url: '/order/showCalculation?year='+year+'&month='+month+'&day='+day,
+    method: 'get',
+  })
+  
+}

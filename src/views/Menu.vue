@@ -519,7 +519,7 @@ import {gettableOrderVo,deleteVo} from "../api/order";
 import {IdCategory} from "../api/category";
 import {IdCombo} from "../api/combo";
 import {listSpecification} from "../api/specification"
-import {updateCustomerNum} from "../api/customer"
+import {updateCustomerNum,showCustomerNum} from "../api/customer"
 export default {
     data() {
       return {
@@ -685,7 +685,10 @@ export default {
                 list.oldtableOrder = this.$route.params.oldtableOrder;
                 this.tablequeryParams.tableNo=this.oldtableOrder.tableNo;
                 this.Orderitem2 = this.oldtableOrder;
-                console.log(this.Orderitem2)
+                showCustomerNum(this.Orderitem2.orderNo).then((response) => {
+                    this.Orderitem.customer_num = response.data;
+                });
+                console.log(this.Orderitem)
             }
             
             

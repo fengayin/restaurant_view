@@ -24,3 +24,19 @@ export function billcountSummaryCalculation(span) {
   })
   
 }
+//查询某一年的各月销售、查询某一月的各日销售
+export function billoptionalSummaryCalculation(year,month) {
+  return request({
+    url: '/bill/optionalSummaryCalculation?year='+year+'&month='+month,
+    method: 'get',
+  })
+  
+}
+//单独查询某一年或者某一月、某一日的数据
+export function billshowCalculation(year,month,day) {
+  return request({
+    url: '/bill/showCalculation?year='+year+'&month='+month+'&day='+day,
+    method: 'get',
+  })
+  
+}

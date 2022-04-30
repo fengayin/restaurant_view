@@ -110,12 +110,11 @@ export default {
     },
     agreeChange2(){
       this.getInfo();
-      console.log(this.radio1)
-      console.log(this.radio2)
-      console.log(this.countSum)
     },
     initEcharts(countSum) {
-      var myChart = this.$echarts.init(this.$refs.main)
+      const chart = this.$refs.main;
+      chart.setAttribute('_echarts_instance_', '');
+      var myChart = this.$echarts.init(chart)
       var option = {
           grid:{
 

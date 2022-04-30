@@ -45,6 +45,11 @@ const routes = [
       name: 'OrderSumCount',
       component:() => import("../views/Count/OrderSumCount.vue"),
     },
+    {
+      path: '/optionalOrderSumCount',
+      name: 'OptionalOrderSumCount',
+      component:() => import("../views/Count/OptionalOrderSumCount.vue"),
+    },
     ]
   },
 //   {

@@ -189,6 +189,8 @@ export default {
       this.monthoption=this.month[0].value
       this.dateoption=null;
       this.amount=0;
+      this.optionamount=0;
+      this.getamount()
     },
     agreeChangeyear(){
       this.getInfo();

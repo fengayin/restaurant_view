@@ -2,13 +2,13 @@
   <nav>
     <ul> 
       <li>
-  			<router-link to="Ordering">点菜</router-link>
+  			<router-link to="/ordering">点菜</router-link>
       </li>
       <li>
-        	<router-link to="Order" exact>订单</router-link>
+        	<router-link to="/order" >订单</router-link>
       </li>
       <li>
-        <router-link to="Kitchen" exact>后厨制作</router-link>
+        <router-link to="/kitchen" exact>后厨制作</router-link>
       </li>
     </ul> 
   </nav>
@@ -44,7 +44,7 @@ nav{
 }
 /*选中则发生一些变化*/
 .router-link-active{
-	background: rgba(117, 110, 110, 0.8);
-	color: #444;
+	background: rgba(117, 110, 110, 0.8) !important;
+	color: #444 !important;
 }
 </style>

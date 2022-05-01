@@ -1,6 +1,6 @@
 <template>
     <div class="order">
-        <el-tabs v-model="activeName" style="height:600px ">
+        <el-tabs v-model="activeName" style="height:600px " @tab-click="routerchange">
             <el-tab-pane label="未结账" name="1">
                 <el-table
                     :data="orderList"
@@ -291,10 +291,10 @@
                                 门店业绩报表
                             </template>
                             <el-menu-item-group>
-                                <el-menu-item index="OrderSumCount" @click="reloadRouter('/orderSumCount')">全部业绩报表</el-menu-item>
+                                <el-menu-item index="OrderSumCount" @click="reloadRouter('/order/orderSumCount')">全部业绩报表</el-menu-item>
                             </el-menu-item-group>
                             <el-menu-item-group>
-                                <el-menu-item index="OptionalOrderSumCount" @click="reloadRouter('/optionalorderSumCount')">查询业绩报表</el-menu-item>
+                                <el-menu-item index="OptionalOrderSumCount" @click="reloadRouter('/order/optionalorderSumCount')">查询业绩报表</el-menu-item>
                             </el-menu-item-group>
                             
                             </el-submenu>
@@ -304,13 +304,13 @@
                                 菜品业绩报表
                             </template>
                             <el-menu-item-group>
-                                <el-menu-item index="CategoryCount" @click="reloadRouter('/categoryCount')" >菜品类型业绩报表</el-menu-item>
+                                <el-menu-item index="CategoryCount" @click="reloadRouter('/order/categoryCount')" >菜品类型业绩报表</el-menu-item>
                             </el-menu-item-group>
                             <el-menu-item-group>
-                                <el-menu-item index="ComboCount" @click="reloadRouter('/comboCount')">套餐业绩报表</el-menu-item>
+                                <el-menu-item index="ComboCount" @click="reloadRouter('/order/comboCount')">套餐业绩报表</el-menu-item>
                             </el-menu-item-group>
                             <el-menu-item-group>
-                                <el-menu-item index="FoodCount" @click="reloadRouter('/foodCount')">每份菜品业绩报表</el-menu-item>
+                                <el-menu-item index="FoodCount" @click="reloadRouter('/order/foodCount')">每份菜品业绩报表</el-menu-item>
                             </el-menu-item-group>
                             </el-submenu>
                         </el-submenu>
@@ -537,8 +537,12 @@ export default {
                 }
             });
         },
-        
-
+        routerchange(tab, event){
+            const url ='/order'
+            if (this.$route.path !== url) {
+                this.$router.push(url)
+            }
+        }
     },
 }
 </script>

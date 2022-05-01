@@ -5,10 +5,11 @@ Vue.use(VueRouter);
 
 
 
+
 const routes = [
   {
     path: '/',
-    redirect: 'Ordering',
+    redirect: '/ordering',
   },
   {
     path: '/ordering',
@@ -26,37 +27,32 @@ const routes = [
     component:() => import("../views/Order.vue"),
     children:[
       {
-          path: '/categoryCount',
+          path: '/order/categoryCount',
           name: 'CategoryCount',
           component:() => import("../views/Count/CategoryCount.vue"),
       },
       {
-        path: '/comboCount',
+        path: '/order/comboCount',
         name: 'ComboCount',
         component:() => import("../views/Count/ComboCount.vue"),
     },
     {
-      path: '/foodCount',
+      path: '/order/foodCount',
       name: 'FoodCount',
       component:() => import("../views/Count/FoodCount.vue"),
     },
     {
-      path: '/orderSumCount',
+      path: '/order/orderSumCount',
       name: 'OrderSumCount',
       component:() => import("../views/Count/OrderSumCount.vue"),
     },
     {
-      path: '/optionalOrderSumCount',
+      path: '/order/optionalOrderSumCount',
       name: 'OptionalOrderSumCount',
       component:() => import("../views/Count/OptionalOrderSumCount.vue"),
     },
     ]
   },
-//   {
-//     path: '/foodCount',
-//     name: 'FoodCount',
-//     component:() => import("../views/FoodCount.vue"),
-// },
   {
     path: '/kitchen',
     name: 'Kitchen',

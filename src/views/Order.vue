@@ -285,7 +285,7 @@
             <el-tab-pane label="报表" name="5">
                 <el-container style="border: 1px solid #eee">
                     <el-aside style="width:250px;height:500px;overflow:hidden"  >
-                        <el-menu >
+                        <el-menu unique-opened="true">
                         <el-submenu index="1" style="width:100%">
                             <template slot="title">
                                 门店业绩报表
@@ -310,7 +310,7 @@
                                 <el-menu-item index="ComboCount" @click="reloadRouter('/comboCount')">套餐业绩报表</el-menu-item>
                             </el-menu-item-group>
                             <el-menu-item-group>
-                                <el-menu-item index="FoodCount" @click="reloadRouter('/foodCount')">食品业绩报表</el-menu-item>
+                                <el-menu-item index="FoodCount" @click="reloadRouter('/foodCount')">每份菜品业绩报表</el-menu-item>
                             </el-menu-item-group>
                             </el-submenu>
                         </el-submenu>

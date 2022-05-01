@@ -96,7 +96,7 @@ export default {
       var myChart = this.$echarts.init(this.$refs.main)
       var option = {
         title: {
-          text: '餐品类别业绩表',
+          text: '餐品业绩表',
           subtext: '按餐品类型',
           left: 'center'
         },
@@ -109,12 +109,19 @@ export default {
         },
         series: [
           {
-            name: '占所有餐品类别的',
+            name: '',
             type: 'pie',
             radius: '60%',
             data: countFood,
-            emphasis: {
-              itemStyle: {
+            label :{
+              normal: {
+                show: true,
+                formatter: '{b}:{c}: ({d}%)',
+                }
+            },
+            
+            itemStyle: {
+              emphasis: {
                 shadowBlur: 10,
                 shadowOffsetX: 0,
                 shadowColor: 'rgba(0, 0, 0, 0.5)'

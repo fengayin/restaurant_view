@@ -24,11 +24,14 @@
             :value="item.value">
             </el-option>
         </el-select>
+        <span>&nbsp&nbsp&nbsp&nbsp</span>
+        <span> 总销售额为￥{{optionamount}}</span>
         <div style="height:300px">
             <div ref="main" style="whith:100%;height:100%;margin: 0 auto;" />
         </div>
         <div style="margin-top:20px">
-            <!-- <el-select v-model="yearoption2" placeholder="请选择" @change="agreeChangeyear"size="mini">
+           <!-- <span>{{radio}}：</span> 
+            <el-select v-model="yearoption2" placeholder="请选择" @change="Changeyear"size="mini">
                 <el-option
                 v-for="item in year"
                 :key="item.value"
@@ -37,7 +40,7 @@
                 </el-option>
             </el-select>
             <span>年</span>
-            <el-select v-model="monthoption2" placeholder="请选择" @change="agreeChangemonth"size="mini">
+            <el-select v-model="monthoption2" placeholder="请选择" @change="Changemonth"size="mini">
                 <el-option
                 v-for="item in month"
                 :key="item.value"
@@ -46,14 +49,15 @@
                 </el-option>
             </el-select>
             <span>月</span>
-            <el-select v-model="dayoption2" placeholder="请选择" @change="agreeChangemonth"size="mini">
+             <br> <br>  -->
+            <!-- <el-select v-model="dayoption2" placeholder="请选择" @change="agreeChangemonth"size="mini">
                 <el-option
                 v-for="item in day"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value">
                 </el-option>
-            </el-select> <span>日的销售额为￥{{amount}}</span> <br> -->
+            </el-select> -->
             <span>{{radio}}：</span> 
             <el-date-picker
                 v-model="dateoption"
@@ -83,6 +87,7 @@ export default {
         countSum:undefined,
         radio:"总营业",
         amount:0,
+        optionamount:0,
         year:[{
           value: '2022',
           label: '2022'
@@ -146,6 +151,7 @@ export default {
     this.monthoption=this.month[0].value
     
     this.getInfo()
+    this.getamount()
     
   },
   mounted() {
@@ -176,9 +182,7 @@ export default {
                 this.initEcharts(this.countSum)
             })
         }
-      
     },
-    
     agreeChange1(){
       this.getInfo();
       this.yearoption=this.year[0].value
@@ -188,11 +192,31 @@ export default {
     },
     agreeChangeyear(){
       this.getInfo();
+      this.getamount()
       console.log(this.countSum)
     },
     agreeChangemonth(){
       this.getInfo();
+      this.getamount()
       console.log(this.countSum)
+    },
+    
+    getamount(){
+      if(this.radio1==1){
+            showCalculation(this.yearoption,this.monthoption,0).then((response)=>{
+                this.optionamount=response.data.amount
+            })
+        }
+        else if(this.radio1==2){
+             billshowCalculation(this.yearoption,this.monthoption,0).then((response)=>{
+                this.optionamount=response.data.amount
+            })
+        }
+        else if(this.radio1==3){
+             chargeshowCalculation(this.yearoption,this.monthoption,0).then((response)=>{
+                this.optionamount=response.data.amount
+            })
+        }
     },
     selectTime(){
         var array = this.dateoption.split(",");
@@ -200,8 +224,6 @@ export default {
             showCalculation(array[0].toString(),array[1].toString(),array[2].toString()).then((response)=>{
                 this.amount=response.data.amount
             })
-            
-    
         }
         else if(this.radio1==2){
              billshowCalculation(array[0].toString(),array[1].toString(),array[2].toString()).then((response)=>{

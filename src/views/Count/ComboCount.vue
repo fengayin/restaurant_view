@@ -39,12 +39,19 @@ export default {
         },
         series: [
           {
-            name: '占所有套餐的',
+            name: '',
             type: 'pie',
             radius: '50%',
             data: countCombo,
-            emphasis: {
-              itemStyle: {
+            label :{
+              normal: {
+                show: true,
+                formatter: '{b}:{c}: ({d}%)',
+                }
+            },
+            
+            itemStyle: {
+              emphasis: {
                 shadowBlur: 10,
                 shadowOffsetX: 0,
                 shadowColor: 'rgba(0, 0, 0, 0.5)'

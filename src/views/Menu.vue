@@ -502,7 +502,7 @@
                         </el-tab-pane>
                     </el-tabs>
                     <div>
-                        <el-button type="primary" size="medium" class="button" @click="deleteVo(Orderitem.tableId)">取消点餐</el-button>
+                        <el-button type="primary" size="medium" class="button" @click="handledeleteOrder(Orderitem2.orderNo,Orderitem.tableId)">取消点餐</el-button>
                         <el-button type="primary" size="medium" class="button" @click="comfirm()">登记</el-button>
                     </div>
                 </el-main>
@@ -515,7 +515,7 @@
 import {listFood , getListByPage} from '../api/food';
 import {findTable} from "../api/table";
 import {addFood,deleteFood,comfirmOrder} from "../api/orderItem";
-import {gettableOrderVo,deleteVo} from "../api/order";
+import {gettableOrderVo,deleteVo,deleteOrder} from "../api/order";
 import {IdCategory} from "../api/category";
 import {IdCombo} from "../api/combo";
 import {listSpecification} from "../api/specification"
@@ -571,6 +571,7 @@ export default {
           foodNo: undefined,
         },
          Orderitem: {
+            tableId:undefined,
             customer_num:undefined
         }, 
         Orderitem2: {
@@ -775,10 +776,22 @@ export default {
             this.specification.sauce=undefined;
             this.specification.maturity=undefined;
         },
-        deleteVo(tableId){
-            deleteVo(tableId).then((response) =>{  
+        // deleteVo(tableId){
+        //     deleteVo(tableId).then((response) =>{  
+        //     })
+        //     this.$router.push({name:'Ordering'})
+        // },
+        handledeleteOrder(orderNo,tableId){
+            if(tableId==undefined){
+                 this.$router.push({name:'Ordering'}) 
+            }
+            else{
+                deleteOrder(orderNo,tableId).then((response) =>{
+                 this.$router.push({name:'Ordering'}) 
             })
-            this.$router.push({name:'Ordering'})
+            }
+            
+            
         },
         handledeleteFood(index,orderItemList){
             this.tableOrderVo.foodNo=orderItemList[index].foodNo;

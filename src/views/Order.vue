@@ -417,11 +417,13 @@ export default {
         },
         handleClick(index,orderList){
             this.IdorderList=orderList[index];
-            console.log(this.IdorderList);
+            // this.IdorderList.orderTime=timestampToTime(this.IdorderList.orderTime)
+            // console.log(timestampToTime(this.IdorderList.orderTime));
             this.dialogFormVisible=true;
             
             
         }, 
+        
         handleCharge(index,orderList){
             this.charge.orderId=orderList[index].orderId;
             this.charge.orderNo=orderList[index].orderNo;
@@ -521,10 +523,22 @@ export default {
             this.AddCheckoutFormVisible=false;
         },
         OrderCheck(index,listOrder){
-             this.IdorderList=listOrder[index];
-            console.log(this.IdorderList);
+            this.IdorderList=listOrder[index];
+            // console.log(this.IdorderList.orderTime);
+            // //this.IdorderList.orderTime=this.timestampToTime(this.IdorderList.orderTime)
+            // console.log(this.timestampToTime(this.IdorderList.orderTime));
             this.OrderVisible=true;
         },
+        // timestampToTime(timestamp) {
+        //     var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        //         Y = date.getFullYear() + '-';
+        //         M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        //         D = date.getDate() + '';
+        //         h = date.getHours() + ':';
+        //         m = date.getMinutes() + ':';
+        //         s = date.getSeconds();
+        //     return Y+M+D;
+        // },
         // reloadRouter(path) {
 
         //     console.log(this.$route.path)

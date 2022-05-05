@@ -1,7 +1,7 @@
 <template>
 
   <div class="table" :data="tableList" >
-    <div v-for="(table) in tableList" >
+    <!-- <div v-for="(table) in tableList" >
       <div class="tablecard">
         <el-col :span="6" >
           <el-card shadow="never"  >
@@ -26,23 +26,275 @@
           </el-card>
         </el-col>
       </div>
-    </div>
-    <!-- <div class="tablecard">
-      <el-card shadow="never">
-        <div v-if="table.state == true" >
-                <img class="img"  
-                  src="@/assets/not_use.png" 
-                  >
-              </img>
-              </div>
-              <div v-else-if="table.state == false">
-                <img class="img2" 
-                  src="@/assets/in_use.png"
-                  >
-                </img>
-              </div>
-      </el-card>
     </div> -->
+    <div class="tablecard">
+      <el-row :gutter="20">
+      <el-col :span="6" >
+      <el-card shadow="never">
+        <div v-if="istableVO1 == true" >
+          <img class="img"  
+            src="@/assets/not_use.png" 
+            >
+        </img>
+        </div>
+        <div v-else-if="istableVO1 == false">
+          <img class="img2" 
+            src="@/assets/in_use.png"
+            >
+          </img>
+        </div>
+        <div>
+          <span>{{tableList[0].tableName}}</span>
+          <div class="bottom clearfix">
+            <el-button type="text"  @click="handleAddTable(tableList[0].tableId) " class="button" >点餐</el-button>
+          </div>
+        </div>
+      </el-card> 
+      </el-col>
+      <el-col  :span="6">
+      <el-card shadow="never">
+        <div v-if="istableVO2 == true" >
+          <img class="img"  
+            src="@/assets/not_use.png" 
+            >
+        </img>
+        </div>
+        <div v-else-if="istableVO2 == false">
+          <img class="img2" 
+            src="@/assets/in_use.png"
+            >
+          </img>
+        </div>
+        <div>
+          <span>{{tableList[1].tableName}}</span>
+          <div class="bottom clearfix">
+            <el-button type="text"  @click="handleAddTable(tableList[1].tableId) " class="button" >点餐</el-button>
+          </div>
+        </div>
+      </el-card>
+      </el-col>
+      <el-col  :span="6">
+      <el-card shadow="never">
+        <div v-if="istableVO3 == true" >
+          <img class="img"  
+            src="@/assets/not_use.png" 
+            >
+        </img>
+        </div>
+        <div v-else-if="istableVO3 == false">
+          <img class="img2" 
+            src="@/assets/in_use.png"
+            >
+          </img>
+        </div>
+        <div>
+          <span>{{tableList[2].tableName}}</span>
+          <div class="bottom clearfix">
+            <el-button type="text"  @click="handleAddTable(tableList[2].tableId) " class="button" >点餐</el-button>
+          </div>
+        </div>
+      </el-card>
+      </el-col>
+      <el-col  :span="6">
+      <el-card shadow="never">
+        <div v-if="istableVO4 == true" >
+          <img class="img"  
+            src="@/assets/not_use.png" 
+            >
+        </img>
+        </div>
+        <div v-else-if="istableVO4 == false">
+          <img class="img2" 
+            src="@/assets/in_use.png"
+            >
+          </img>
+        </div>
+        <div>
+          <span>{{tableList[3].tableName}}</span>
+          <div class="bottom clearfix">
+            <el-button type="text"  @click="handleAddTable(tableList[3].tableId) " class="button" >点餐</el-button>
+          </div>
+        </div>
+      </el-card>
+      </el-col>
+      <el-col  :span="6">
+      <el-card shadow="never">
+        <div v-if="istableVO5 == true" >
+          <img class="img"  
+            src="@/assets/not_use.png" 
+            >
+        </img>
+        </div>
+        <div v-else-if="istableVO5 == false">
+          <img class="img2" 
+            src="@/assets/in_use.png"
+            >
+          </img>
+        </div>
+        <div>
+          <span>{{tableList[4].tableName}}</span>
+          <div class="bottom clearfix">
+            <el-button type="text"  @click="handleAddTable(tableList[4].tableId) " class="button" >点餐</el-button>
+          </div>
+        </div>
+      </el-card>
+      </el-col>
+      <el-col  :span="6">
+      <el-card shadow="never">
+        <div v-if="istableVO6 == true" >
+          <img class="img"  
+            src="@/assets/not_use.png" 
+            >
+        </img>
+        </div>
+        <div v-else-if="istableVO6 == false">
+          <img class="img2" 
+            src="@/assets/in_use.png"
+            >
+          </img>
+        </div>
+        <div>
+          <span>{{tableList[5].tableName}}</span>
+          <div class="bottom clearfix">
+            <el-button type="text"  @click="handleAddTable(tableList[5].tableId) " class="button" >点餐</el-button>
+          </div>
+        </div>
+      </el-card>
+      </el-col>
+      <el-col  :span="6">
+      <el-card shadow="never">
+        <div v-if="istableVO7 == true" >
+          <img class="img"  
+            src="@/assets/not_use.png" 
+            >
+        </img>
+        </div>
+        <div v-else-if="istableVO7 == false">
+          <img class="img2" 
+            src="@/assets/in_use.png"
+            >
+          </img>
+        </div>
+        <div>
+          <span>{{tableList[6].tableName}}</span>
+          <div class="bottom clearfix">
+            <el-button type="text"  @click="handleAddTable(tableList[6].tableId) " class="button" >点餐</el-button>
+          </div>
+        </div>
+      </el-card>
+      </el-col>
+      <el-col  :span="6">
+      <el-card shadow="never">
+        <div v-if="istableVO8 == true" >
+          <img class="img"  
+            src="@/assets/not_use.png" 
+            >
+        </img>
+        </div>
+        <div v-else-if="istableVO8 == false">
+          <img class="img2" 
+            src="@/assets/in_use.png"
+            >
+          </img>
+        </div>
+        <div>
+          <span>{{tableList[7].tableName}}</span>
+          <div class="bottom clearfix">
+            <el-button type="text"  @click="handleAddTable(tableList[7].tableId) " class="button" >点餐</el-button>
+          </div>
+        </div>
+      </el-card>
+      </el-col>
+      <el-col  :span="6">
+      <el-card shadow="never">
+        <div v-if="istableVO9 == true" >
+          <img class="img"  
+            src="@/assets/not_use.png" 
+            >
+        </img>
+        </div>
+        <div v-else-if="istableVO9 == false">
+          <img class="img2" 
+            src="@/assets/in_use.png"
+            >
+          </img>
+        </div>
+        <div>
+          <span>{{tableList[8].tableName}}</span>
+          <div class="bottom clearfix">
+            <el-button type="text"  @click="handleAddTable(tableList[8].tableId) " class="button" >点餐</el-button>
+          </div>
+        </div>
+      </el-card>
+      </el-col>
+      <el-col  :span="6">
+      <el-card shadow="never">
+        <div v-if="istableVO10 == true" >
+          <img class="img"  
+            src="@/assets/not_use.png" 
+            >
+        </img>
+        </div>
+        <div v-else-if="istableVO10 == false">
+          <img class="img2" 
+            src="@/assets/in_use.png"
+            >
+          </img>
+        </div>
+        <div>
+          <span>{{tableList[9].tableName}}</span>
+          <div class="bottom clearfix">
+            <el-button type="text"  @click="handleAddTable(tableList[9].tableId) " class="button" >点餐</el-button>
+          </div>
+        </div>
+      </el-card>
+      </el-col>
+      <el-col  :span="6">
+      <el-card shadow="never">
+        <div v-if="istableVO11 == true" >
+          <img class="img"  
+            src="@/assets/not_use.png" 
+            >
+        </img>
+        </div>
+        <div v-else-if="istableVO11 == false">
+          <img class="img2" 
+            src="@/assets/in_use.png"
+            >
+          </img>
+        </div>
+        <div>
+          <span>{{tableList[10].tableName}}</span>
+          <div class="bottom clearfix">
+            <el-button type="text"  @click="handleAddTable(tableList[10].tableId) " class="button" >点餐</el-button>
+          </div>
+        </div>
+      </el-card>
+      </el-col>
+      <el-col  :span="6">
+      <el-card shadow="never">
+        <div v-if="istableVO12 == true" >
+          <img class="img"  
+            src="@/assets/not_use.png" 
+            >
+        </img>
+        </div>
+        <div v-else-if="istableVO12 == false">
+          <img class="img2" 
+            src="@/assets/in_use.png"
+            >
+          </img>
+        </div>
+        <div>
+          <span>{{tableList[11].tableName}}</span>
+          <div class="bottom clearfix">
+            <el-button type="text"  @click="handleAddTable(tableList[11].tableId) " class="button" >点餐</el-button>
+          </div>
+        </div>
+      </el-card>
+      </el-col>
+      </el-row>
+    </div>
     <el-dialog title="请选择" :visible.sync="dialogFormVisible" :modal-append-to-body='false'>
       <el-form :model="tableOrderVo,queryParams"
           ref="queryForm">
@@ -92,7 +344,19 @@ import {createOrder , gettableOrderVo} from "../api/order";
         loading: false,
         
         tableList: [],
-      
+        istableVO1: undefined,
+        istableVO2: undefined,
+        istableVO3: undefined,
+        istableVO4: undefined,
+        istableVO5: undefined,
+        istableVO6: undefined,
+        istableVO7: undefined,
+        istableVO8: undefined,
+        istableVO9: undefined,
+        istableVO10: undefined,
+        istableVO11: undefined,
+        istableVO12: undefined,
+
         queryParams: {
           tableId: undefined,
           tableName:undefined,
@@ -105,7 +369,7 @@ import {createOrder , gettableOrderVo} from "../api/order";
         },
        
         dialogFormVisible: false,
-        zhuangtai:[],
+        // zhuangtai:[],
         
         formLabelWidth: '120px',
         
@@ -129,7 +393,6 @@ import {createOrder , gettableOrderVo} from "../api/order";
    
     created() {
       this.getList();
-      
       console.log(this.$data)
       // //查询所有staff赋值staffList
       // listStaff().then((response) =>{
@@ -141,41 +404,78 @@ import {createOrder , gettableOrderVo} from "../api/order";
       /** 查询桌子列表 */
       getList() {
         this.loading = true;
-        var idList= [];
-        var zhuangtai2=[]
-        listTable(this.tableList).then((response) => {
-          this.tableList = response.data;
-          this.loading = false;
-          this.tableList.forEach((obj)=>{idList.push(obj.tableId)})
-          for(var key in idList){
-            gettableOrderVo(idList[key]).then((response) =>{
-              zhuangtai2.push((typeof response.data)=="object" ? false : true);
-              console.log(key)
-              console.log(response.data)
-              console.log(typeof response.data)
-            });
-          };
+        // var idList= [];
+        // var zhuangtai2=[]
+        // listTable(this.tableList).then((response) => {
+        //   this.tableList = response.data;
+        //   this.loading = false;
+        //   this.tableList.forEach((obj)=>{idList.push(obj.tableId)})
+        //   for(var key in idList){
+        //     gettableOrderVo(idList[key]).then((response) =>{
+        //       zhuangtai2.push((typeof response.data)=="object" ? false : true);
+        //       console.log(key)
+        //       console.log(response.data)
+        //       console.log(typeof response.data)
+        //     });
+        //   };
           
-          setTimeout(() => {
-            console.log(zhuangtai2)
-            for(var i in zhuangtai2){
-              this.tableList[i].state=zhuangtai2[i]
-            }
-          }, 1200);
-          setTimeout( ()=> {
-            this.$forceUpdate();
-          }, 2000)
+        //   setTimeout(() => {
+        //     console.log(zhuangtai2)
+        //     for(var i in zhuangtai2){
+        //       this.tableList[i].state=zhuangtai2[i]
+        //     }
+        //   }, 1200);
+        //   setTimeout( ()=> {
+        //     this.$forceUpdate();
+        //   }, 2000)
         
-        });
+        // });
         // listStaff(this.queryParams).then((response) => {
         //   this.staffList = response.data;
         //   this.loading = false;
         // });
-          // listTable(this.tableList).then((response) => {
-          //   this.tableList = response.data;
-          //   this.loading = false;
-          // });
-      },
+          listTable(this.tableList).then((response) => {
+            this.tableList = response.data;
+            this.loading = false;
+          });
+          gettableOrderVo(1).then((response) =>{
+              this.istableVO1= ((typeof response.data)=="object" ? false : true)
+          });
+           gettableOrderVo(2).then((response) =>{
+            this.istableVO2=((typeof response.data)=="object" ? false : true)
+          });
+          gettableOrderVo(3).then((response) =>{
+            this.istableVO3=((typeof response.data)=="object" ? false : true)
+          });
+           gettableOrderVo(4).then((response) =>{
+            this.istableVO4=((typeof response.data)=="object" ? false : true)
+          });
+          gettableOrderVo(5).then((response) =>{
+            this.istableVO5=((typeof response.data)=="object" ? false : true)
+          });
+          gettableOrderVo(6).then((response) =>{
+            this.istableVO6=((typeof response.data)=="object" ? false : true)
+          });
+          gettableOrderVo(7).then((response) =>{
+            this.istableVO7=((typeof response.data)=="object" ? false : true)
+          });
+          gettableOrderVo(8).then((response) =>{
+            this.istableVO8=((typeof response.data)=="object" ? false : true)
+          });
+          gettableOrderVo(9).then((response) =>{
+            this.istableVO9=((typeof response.data)=="object" ? false : true)
+          });
+          gettableOrderVo(10).then((response) =>{
+            this.istableVO10=((typeof response.data)=="object" ? false : true)
+          });
+          gettableOrderVo(11).then((response) =>{
+            this.istableVO11=((typeof response.data)=="object" ? false : true)
+          });
+          gettableOrderVo(12).then((response) =>{
+            this.istableVO12=(typeof response.data)=="object" ? false : true
+          });
+
+      }, 
       handleAddTable(val){
         this.tableOrderVo.tableId=parseInt(val);
         gettableOrderVo(val).then((response) =>{

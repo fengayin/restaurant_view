@@ -54,6 +54,16 @@ export function deleteVo(tableId) {
   })
   
 }
+
+//通过编号删除订单
+export function deleteOrder(orderNo,tableId) {
+  return request({
+    url: '/order/deleteOrder?orderNo='+orderNo+'&tableId='+tableId,
+    method: 'delete',
+  })
+  
+}
+
 //销售年月日报表
 export function countSummaryCalculation(span) {
   return request({

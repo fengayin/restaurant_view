@@ -9,8 +9,12 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    redirect: '/ordering',
   },
+  // {
+  //   path: '/login',
+  //   name: 'Login',
+  //   component:() => import("../views/Login.vue"),
+  // },
   {
     path: '/ordering',
     name: 'Ordering',

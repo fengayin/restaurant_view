@@ -7,3 +7,12 @@ export function listStaff(query) {
       params: query
     })
   }
+//根据id找名字
+  export function fineName(id) {
+    return request({
+      url: '/staff/fineName?id='+id,
+      method: 'get',
+    })
+  }
+
+  

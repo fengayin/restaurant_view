@@ -35,7 +35,7 @@
           <img class="img"  
             src="@/assets/not_use.png" 
             >
-        </img>
+            </img>
         </div>
         <div v-else-if="istableVO1 == false">
           <img class="img2" 

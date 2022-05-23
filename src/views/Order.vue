@@ -79,6 +79,10 @@
                                         </el-option>
                                     </el-select>
                                 </el-form-item>
+                                <!-- <el-form-item label="负责员工">
+                                    {{username}}
+                                </el-form-item> -->
+
                             </el-form>
                         </div>
                         <div>
@@ -162,31 +166,36 @@
                         <el-table-column
                         prop="chargeNo"
                         label="挂账单编号"
-                        width="300">
+                        width="400">
                         </el-table-column>
                         <el-table-column
                         prop="chargeUnit"
                         label="挂账单位"
-                        width="250">
+                        width="350">
                         </el-table-column>
                         <el-table-column
                         prop="chargeTel"
                         label="挂账人联系方式"
-                        width="200">
+                        width="350">
                         </el-table-column>
-                        <el-table-column
+                        <!-- <el-table-column
                         prop="staffId"
-                        label="负责员工id"
-                        width="100">
-                        </el-table-column>
+                        label="负责员工id">
+                        </el-table-column> -->
                         <el-table-column
                         fixed="right"
                         label="操作">
-                        <template slot-scope="scope">
-                            <el-button type="text" size="small"  >查看</el-button>
+                         <template slot-scope="scope">
+                            <el-button type="text" size="small"  @click="checkchargestaff(scope.$index,chargeList)">查看员工</el-button>
                         </template>
                         </el-table-column>
+                        
                     </el-table>
+                    <el-dialog  :visible.sync="CheckchargestaffVisible" :modal-append-to-body='false' >
+                        <div>
+                            <span>负责员工：{{staffname}}</span>
+                        </div>
+                    </el-dialog>
             </el-tab-pane>
                 <el-tab-pane label="已结账" name="3">
                     <el-table
@@ -201,36 +210,40 @@
                         <el-table-column
                         prop="billNo"
                         label="账单编号"
-                        width="300">
+                        width="400">
                         </el-table-column>
                         <el-table-column
                         prop="payTime"
                         label="支付时间"
-                        width="150">
+                        width="350">
                         </el-table-column>
                         <el-table-column
                         prop="receivable"
                         label="应收金额"
-                        width="150">
+                        width="200">
                         </el-table-column>
                         <el-table-column
                         prop="receipts"
                         label="实收金额"
-                        width="150">
+                        width="200">
                         </el-table-column>
-                        <el-table-column
+                        <!-- <el-table-column
                         prop="staffId"
-                        label="负责员工id"
-                        width="100">
-                        </el-table-column>
+                        label="负责员工id">
+                        </el-table-column> -->
                         <el-table-column
                         fixed="right"
                         label="操作">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small"  >查看</el-button>
+                            <el-button type="text" size="small" @click="checkbillstaff(scope.$index,billList)" >查看员工</el-button>
                         </template>
                         </el-table-column>
                     </el-table>
+                    <el-dialog  :visible.sync="CheckbillstaffVisible" :modal-append-to-body='false' >
+                    <div>
+                        <span>负责员工：{{staffname}}</span>
+                    </div>
+                    </el-dialog>
                 </el-tab-pane>
             <el-tab-pane label="全部订单" name="4">
                     <el-table
@@ -255,6 +268,11 @@
                         <el-table-column
                         prop="totalprice"
                         label="总金额"
+                        width="250">
+                        </el-table-column>
+                        <el-table-column
+                        prop="orderTime"
+                        label="下单时间"
                         width="250">
                         </el-table-column>
                         <el-table-column
@@ -297,7 +315,6 @@
                                 <el-menu-item index="OptionalOrderSumCount" @click="reloadRouter('/order/optionalorderSumCount')">查询业绩报表</el-menu-item>
                             </el-menu-item-group>
                             
-                            </el-submenu>
                         </el-submenu>
                         <el-submenu index="2" style="width:100%">
                             <template slot="title">
@@ -312,7 +329,6 @@
                             <el-menu-item-group>
                                 <el-menu-item index="FoodCount" @click="reloadRouter('/order/foodCount')">每份菜品业绩报表</el-menu-item>
                             </el-menu-item-group>
-                            </el-submenu>
                         </el-submenu>
                         </el-menu>
                     </el-aside>
@@ -329,11 +345,12 @@
 <script>
 import {listOrder,IdOrder,unSettledList} from "../api/order";
 
-import {listStaff} from "../api/staff";
+import {listStaff,fineName} from "../api/staff";
 import {payBill,ListBill} from "../api/bill";
 import {payCharge,ListCharge} from "../api/charge";
 export default {
-    inject: ['reload'],
+    inject: ['reload','Username'],
+
     data() {
         return {
             activeName: '1',
@@ -348,8 +365,12 @@ export default {
             chargeFormVisible: false,
             CheckoutFormVisible: false,
             AddCheckoutFormVisible:false,
-            mobilepaymentVisible:false,
+            mobilepaymentVisible:false,            
             OrderVisible:false,
+            CheckchargestaffVisible:false,
+            CheckbillstaffVisible:false,
+            staffname:undefined,
+            username:undefined,
             bill:{
                 orderId:undefined,
                 receipts:undefined,
@@ -397,6 +418,7 @@ export default {
       /** 查询食物列表 */
         getList(){
             this.loading = true;
+            this.username=this.Username();
             unSettledList(this.orderList).then((response) => {
                 this.orderList = response.data;
                 this.loading = false;
@@ -522,12 +544,31 @@ export default {
             this.bill.staffId=undefined;
             this.AddCheckoutFormVisible=false;
         },
+        checkchargestaff(index,chargeList){
+            const id=chargeList[index].staffId
+            
+            fineName(id).then((response) => {
+                
+                this.staffname=response.data;
+                console.log(this.staffname)
+                this.CheckchargestaffVisible=true;
+            });
+        },
+        checkbillstaff(index,billList){
+            const id=billList[index].staffId
+            fineName(id).then((response) => {
+                this.staffname=response.data
+                this.CheckbillstaffVisible=true;
+            });
+        },
+
         OrderCheck(index,listOrder){
             this.IdorderList=listOrder[index];
             // console.log(this.IdorderList.orderTime);
             // //this.IdorderList.orderTime=this.timestampToTime(this.IdorderList.orderTime)
             // console.log(this.timestampToTime(this.IdorderList.orderTime));
             this.OrderVisible=true;
+            
         },
         // timestampToTime(timestamp) {
         //     var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000

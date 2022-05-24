@@ -32,16 +32,14 @@
       <el-col :span="6" >
       <el-card shadow="never">
         <div v-if="istableVO1 == true" >
-          <img class="img"  
+          <img class="img1"  
             src="@/assets/not_use.png" 
-            >
-            </img>
+            />
         </div>
         <div v-else-if="istableVO1 == false">
           <img class="img2" 
             src="@/assets/in_use.png"
-            >
-          </img>
+            />
         </div>
         <div>
           <span>{{tableList[0].tableName}}</span>
@@ -54,16 +52,14 @@
       <el-col  :span="6">
       <el-card shadow="never">
         <div v-if="istableVO2 == true" >
-          <img class="img"  
+          <img class="img1"  
             src="@/assets/not_use.png" 
-            >
-        </img>
+            />
         </div>
         <div v-else-if="istableVO2 == false">
           <img class="img2" 
             src="@/assets/in_use.png"
-            >
-          </img>
+            />
         </div>
         <div>
           <span>{{tableList[1].tableName}}</span>
@@ -76,16 +72,14 @@
       <el-col  :span="6">
       <el-card shadow="never">
         <div v-if="istableVO3 == true" >
-          <img class="img"  
+          <img class="img1"  
             src="@/assets/not_use.png" 
-            >
-        </img>
+            />
         </div>
         <div v-else-if="istableVO3 == false">
           <img class="img2" 
             src="@/assets/in_use.png"
-            >
-          </img>
+            />
         </div>
         <div>
           <span>{{tableList[2].tableName}}</span>
@@ -98,16 +92,14 @@
       <el-col  :span="6">
       <el-card shadow="never">
         <div v-if="istableVO4 == true" >
-          <img class="img"  
+          <img class="img1"  
             src="@/assets/not_use.png" 
-            >
-        </img>
+            />
         </div>
         <div v-else-if="istableVO4 == false">
           <img class="img2" 
             src="@/assets/in_use.png"
-            >
-          </img>
+           />
         </div>
         <div>
           <span>{{tableList[3].tableName}}</span>
@@ -120,16 +112,14 @@
       <el-col  :span="6">
       <el-card shadow="never">
         <div v-if="istableVO5 == true" >
-          <img class="img"  
+          <img class="img1"  
             src="@/assets/not_use.png" 
-            >
-        </img>
+           />
         </div>
         <div v-else-if="istableVO5 == false">
           <img class="img2" 
             src="@/assets/in_use.png"
-            >
-          </img>
+           />
         </div>
         <div>
           <span>{{tableList[4].tableName}}</span>
@@ -142,16 +132,14 @@
       <el-col  :span="6">
       <el-card shadow="never">
         <div v-if="istableVO6 == true" >
-          <img class="img"  
+          <img class="img1"  
             src="@/assets/not_use.png" 
-            >
-        </img>
+            />
         </div>
         <div v-else-if="istableVO6 == false">
           <img class="img2" 
             src="@/assets/in_use.png"
-            >
-          </img>
+            />
         </div>
         <div>
           <span>{{tableList[5].tableName}}</span>
@@ -164,16 +152,14 @@
       <el-col  :span="6">
       <el-card shadow="never">
         <div v-if="istableVO7 == true" >
-          <img class="img"  
+          <img class="img1"  
             src="@/assets/not_use.png" 
-            >
-        </img>
+            />
         </div>
         <div v-else-if="istableVO7 == false">
           <img class="img2" 
             src="@/assets/in_use.png"
-            >
-          </img>
+            />
         </div>
         <div>
           <span>{{tableList[6].tableName}}</span>
@@ -186,16 +172,14 @@
       <el-col  :span="6">
       <el-card shadow="never">
         <div v-if="istableVO8 == true" >
-          <img class="img"  
+          <img class="img1"  
             src="@/assets/not_use.png" 
-            >
-        </img>
+            />
         </div>
         <div v-else-if="istableVO8 == false">
           <img class="img2" 
             src="@/assets/in_use.png"
-            >
-          </img>
+            />
         </div>
         <div>
           <span>{{tableList[7].tableName}}</span>
@@ -208,16 +192,14 @@
       <el-col  :span="6">
       <el-card shadow="never">
         <div v-if="istableVO9 == true" >
-          <img class="img"  
+          <img class="img1"  
             src="@/assets/not_use.png" 
-            >
-        </img>
+            />
         </div>
         <div v-else-if="istableVO9 == false">
           <img class="img2" 
             src="@/assets/in_use.png"
-            >
-          </img>
+            />
         </div>
         <div>
           <span>{{tableList[8].tableName}}</span>
@@ -230,16 +212,14 @@
       <el-col  :span="6">
       <el-card shadow="never">
         <div v-if="istableVO10 == true" >
-          <img class="img"  
+          <img class="img1"  
             src="@/assets/not_use.png" 
-            >
-        </img>
+            />
         </div>
         <div v-else-if="istableVO10 == false">
           <img class="img2" 
             src="@/assets/in_use.png"
-            >
-          </img>
+            />
         </div>
         <div>
           <span>{{tableList[9].tableName}}</span>
@@ -252,16 +232,14 @@
       <el-col  :span="6">
       <el-card shadow="never">
         <div v-if="istableVO11 == true" >
-          <img class="img"  
+          <img class="img1"  
             src="@/assets/not_use.png" 
-            >
-        </img>
+            />
         </div>
         <div v-else-if="istableVO11 == false">
           <img class="img2" 
             src="@/assets/in_use.png"
-            >
-          </img>
+            />
         </div>
         <div>
           <span>{{tableList[10].tableName}}</span>
@@ -274,16 +252,14 @@
       <el-col  :span="6">
       <el-card shadow="never">
         <div v-if="istableVO12 == true" >
-          <img class="img"  
+          <img class="img1"  
             src="@/assets/not_use.png" 
-            >
-        </img>
+            />
         </div>
         <div v-else-if="istableVO12 == false">
           <img class="img2" 
             src="@/assets/in_use.png"
-            >
-          </img>
+            />
         </div>
         <div>
           <span>{{tableList[11].tableName}}</span>
@@ -532,7 +508,7 @@ import {createOrder , gettableOrderVo} from "../api/order";
   .table{
     margin:0 auto;
   }
-  .img {
+  .img1 {
      width: 100px; 
      height: 100px;
   }

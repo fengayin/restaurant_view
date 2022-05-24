@@ -1,21 +1,17 @@
 import request from '@/utils/request'
-//查询员工列表
-export function listStaff(query) {
+//
+export function listuserRole(query) {
     return request({
-      url: '/staff/list',
+      url: '/sysUserRole/list',
       method: 'get',
       params: query
     })
   }
-
-  export function editStaff(query) {
+//
+  export function editRole(query) {
     return request({
-      url: '/staff',
+      url: '/sysUserRole/edit',
       method: 'put',
       data:query
     })
   }
-
-
-
-  

@@ -68,7 +68,7 @@
                                 <el-form-item label="联系电话" >
                                     <el-input v-model="charge.chargeTel"></el-input>
                                 </el-form-item>
-                                <el-form-item label="员工编号" prop= "staffId" :label-width="formLabelWidth">
+                                <!-- <el-form-item label="员工编号" prop= "staffId" :label-width="formLabelWidth">
                                     <el-select v-model="charge.staffId" placeholder="请选择员工编号">
                                         <el-option
                                             v-for="staff in staffList"
@@ -78,10 +78,10 @@
                                             >
                                         </el-option>
                                     </el-select>
-                                </el-form-item>
-                                <!-- <el-form-item label="负责员工">
-                                    {{username}}
                                 </el-form-item> -->
+                                <el-form-item label="负责员工">
+                                    {{user.name}}
+                                </el-form-item>
 
                             </el-form>
                         </div>
@@ -125,7 +125,7 @@
                                 <el-form-item label="应收款">
                                     <span>{{bill.receipts}}</span>
                                 </el-form-item>
-                                <el-form-item label="员工编号" prop= "staffId" :label-width="formLabelWidth">
+                                <!-- <el-form-item label="员工编号" prop= "staffId" :label-width="formLabelWidth">
                                     <el-select v-model="bill.staffId" placeholder="请选择员工编号">
                                         <el-option
                                             v-for="staff in staffList"
@@ -135,6 +135,9 @@
                                             >
                                         </el-option>
                                     </el-select>
+                                </el-form-item> -->
+                                <el-form-item label="负责员工">
+                                    {{user.name}}
                                 </el-form-item>
                             </el-form>
                             <div slot="footer" class="dialog-footer">
@@ -345,11 +348,11 @@
 <script>
 import {listOrder,IdOrder,unSettledList} from "../api/order";
 
-import {listStaff,fineName} from "../api/staff";
+import {listStaff} from "../api/staff";
 import {payBill,ListBill} from "../api/bill";
 import {payCharge,ListCharge} from "../api/charge";
 export default {
-    inject: ['reload','Username'],
+    inject: ['reload','User'],
 
     data() {
         return {
@@ -370,7 +373,7 @@ export default {
             CheckchargestaffVisible:false,
             CheckbillstaffVisible:false,
             staffname:undefined,
-            username:undefined,
+            user:[],
             bill:{
                 orderId:undefined,
                 receipts:undefined,
@@ -418,7 +421,7 @@ export default {
       /** 查询食物列表 */
         getList(){
             this.loading = true;
-            this.username=this.Username();
+            this.user=this.User();
             unSettledList(this.orderList).then((response) => {
                 this.orderList = response.data;
                 this.loading = false;
@@ -454,14 +457,14 @@ export default {
 
         },
         Addcharge(){
-            if(this.charge.staffId==null){
+            if(this.charge.chargeUnit==null||this.charge.chargeTel==null){
                 this.$notify.error({
                     title: '错误',
-                    message: '请输入员工号'
+                    message: '请输入信息'
                 });
             }
             else{
-                payCharge(this.charge.orderId,this.charge.chargeUnit,this.charge.chargeTel,this.charge.staffId).then((response) => {
+                payCharge(this.charge.orderId,this.charge.chargeUnit,this.charge.chargeTel,this.user.id).then((response) => {
                     this.charge.orderId=undefined;
                     this.charge.orderNo=undefined;
                     this.charge.chargeUnit=undefined;
@@ -497,22 +500,13 @@ export default {
             this.bill.receipts=(this.discount)*(this.IdorderList.totalprice);
         },
         handlecashpayment(){
-            if(this.bill.staffId==null){
-                this.$notify.error({
-                    title: '错误',
-                    message: '请输入员工号'
-                });
-            }
-            else{
-                payBill(this.bill.orderId,this.bill.receipts,this.bill.staffId).then((response) => {
-                    this.AddCheckoutFormVisible=false;
-                    this.bill.orderId=undefined;
-                    this.bill.receipts=undefined;
-                    this.bill.staffId=undefined;
-                    this.reload();
-            });
-            }
             
+            payBill(this.bill.orderId,this.bill.receipts,this.user.id).then((response) => {
+                this.AddCheckoutFormVisible=false;
+                this.bill.orderId=undefined;
+                this.bill.receipts=undefined;
+                this.reload();
+            });
         },
         handlemobilepayment(){
             if(this.bill.staffId==null){

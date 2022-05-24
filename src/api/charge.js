@@ -12,7 +12,7 @@ export function ListCharge(query) {
 
 export function payCharge(orderId,chargeUnit,chargeTel,staffId){
     return request({
-        url:"/charge/payCharge/?orderId="+orderId+"&chargeUnit="+chargeUnit+"&chargeTel="+chargeTel+"&staffId="+staffId,
+        url:"/charge/payCharge?orderId="+orderId+"&chargeUnit="+chargeUnit+"&chargeTel="+chargeTel+"&staffId="+staffId,
         method:"get",
     });
   }

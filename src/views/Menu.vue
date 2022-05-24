@@ -512,7 +512,7 @@
 </template>
 
 <script>
-import {listFood , getListByPage} from '../api/food';
+import {listFood , getListByPage} from "../api/food";
 import {findTable} from "../api/table";
 import {addFood,deleteFood,comfirmOrder} from "../api/orderItem";
 import {gettableOrderVo,deleteVo,deleteOrder} from "../api/order";

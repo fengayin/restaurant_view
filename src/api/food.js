@@ -7,6 +7,22 @@ export function listFood(query) {
       params: query
     })
   }
+
+  export function exidFood(query) {
+    return request({
+      url: '/food',
+      method: 'put',
+      data:query
+    })
+  }
+
+  export function addFood(query) {
+    return request({
+      url: '/food',
+      method: 'post',
+      data:query
+    })
+  }
   //查询食物名字
 export function findFoodNo(foodNo) {
   return request({

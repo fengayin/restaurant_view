@@ -8,7 +8,7 @@
           <el-input v-model="user.username" ></el-input>
         </el-form-item>
         <el-form-item label="密码">
-          <el-input v-model="user.password"></el-input>
+          <el-input type="password" v-model="user.password"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm()">登录</el-button>
@@ -24,7 +24,7 @@
               <img class="titlepic" src="./assets/title.png" ></img>
               <span class="fonta" >东南西北中发白</span>
             </div> -->
-            <span class="name">用户名：{{StaffName}}</span>
+            <span class="name">用户名：{{Staff.name}}</span>
             <el-button class="ubtton" @click="exit()">退出登录</el-button>
         </el-header>
         <el-main id="zhuye" style="
@@ -54,7 +54,7 @@ export default {
     provide(){
     return {
       reload: this.reload,
-      Username: this.Username
+      User: this.User
     }
   },
     data() {
@@ -63,7 +63,7 @@ export default {
         username: undefined,
         password: undefined,
       },
-      StaffName:undefined,
+      Staff:[],
       NoLogin: true,
       YesLogin: false,
       isRouterAlive: true,
@@ -75,12 +75,12 @@ export default {
   methods: {
     submitForm(){
       isLogin(this.user).then((response) =>{
-        this.StaffName=response.data.data.name
+        this.Staff=response.data.data
         this.NoLogin=false
         this.YesLogin=true;
         const url ='/ordering'
         this.$router.push(url)
-        console.log(response.data.data.name)
+        console.log(response.data.data)
       })
     },
       reloadRouter(path) {
@@ -91,8 +91,8 @@ export default {
         }
       });
     },
-    Username(){
-      return this.StaffName
+    User(){
+      return this.Staff
     },
     reload(){
       this.isRouterAlive = false;

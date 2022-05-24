@@ -10,6 +10,9 @@
       <li>
         <router-link to="/kitchen" exact>后厨制作</router-link>
       </li>
+      <li>
+        <router-link to="/manage" >管理</router-link>
+      </li>
     </ul> 
   </nav>
 </template>
@@ -31,7 +34,7 @@ li{
 a{
 	color: #fff;/*设置字体颜色*/
 	text-decoration: none;/*消除下划线*/
-	padding: 20px 200px 20px 200px;
+	padding: 20px 120px 20px 120px;
 	border-radius: 5px;
 }
 nav{

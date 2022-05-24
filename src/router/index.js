@@ -62,6 +62,23 @@ const routes = [
     name: 'Kitchen',
     component:() => import("../views/Kitchen.vue"),
   },
+  {
+    path: '/manage',
+    name: 'Manage',
+    component:() => import("../views/Manage.vue"),
+    children:[
+      {
+          path: '/manage/foodManage',
+          name: 'FoodManage',
+          component:() => import("../views/Manage/FoodManage.vue"),
+      },
+      {
+        path: '/manage/staffManage',
+        name: 'StaffManage',
+        component:() => import("../views/Manage/StaffManage.vue"),
+      },
+    ]
+  },
   
   
 ];

@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-//查询类别列表
+
 export function isLogin(query) {
     return request({
       url: '/auth/login',
@@ -7,3 +7,12 @@ export function isLogin(query) {
       data: query,
     })
   }
+
+  export function manange() {
+    return request({
+      url: '/auth/manage',
+      method: 'get',
+    })
+  }
+
+  

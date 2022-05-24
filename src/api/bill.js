@@ -11,7 +11,7 @@ export function ListBill(query) {
 
 export function payBill(orderId,receipts,staffId){
     return request({
-        url:"/bill/payBill/?orderId="+orderId+"&receipts="+receipts+"&staffId="+staffId,
+        url:"/bill/payBill?orderId="+orderId+"&receipts="+receipts+"&staffId="+staffId,
         method:"get",
     });
   }

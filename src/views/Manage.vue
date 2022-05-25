@@ -1,14 +1,14 @@
 <template>
     <div class="order">
-        <el-container style="border: 1px solid #eee">
-            <el-aside style="width:250px;height:500px;overflow:hidden; border:1px solid #eee;"  >
+        <el-container style="height:600px;border: 1px solid #eee">
+            <el-aside style="width:250px;overflow:hidden; border:1px solid #eee;"  >
                 <el-menu >
                     <el-menu-item style="width:100%" index="FoodManage" @click="reloadRouter('/manage/foodManage')">菜单管理</el-menu-item>
                     <el-menu-item style="width:100%" index="StaffManage" @click="staffreloadRouter('/manage/staffManage')">员工管理</el-menu-item>
                 </el-menu>
             </el-aside>
             <el-container>
-                <el-main style="height:500px;">
+                <el-main >
                 <router-view></router-view>
                 </el-main>
             </el-container>
@@ -45,7 +45,6 @@ export default {
         },
         staffreloadRouter(path) {
             manange().then((response) => {
-                console.log(response.data)
                 if(response.data.msg == "管理界面"){
                     this.$router.replace({
                         path:path,
@@ -55,7 +54,6 @@ export default {
                     });
                 }
                 else{
-                    
                     this.$notify.error({
                         title: '错误',
                         message: '无法访问'

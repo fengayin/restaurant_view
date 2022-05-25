@@ -8,20 +8,23 @@
             <el-table-column
             type="index"
             label="序号"
-            width="120">
+            width="150">
             </el-table-column>
             <el-table-column
             label="食物名"
-            prop="foodName">
+            prop="foodName"
+            width="350">
             </el-table-column>
             <el-table-column
             label="价格"
-            prop="foodPrice">
+            prop="foodPrice"
+            width="250">
             </el-table-column>
             <el-table-column
             label="种类"
             sortable
-            prop="category.categoryName">
+            prop="category.categoryName"
+            width="250">
             </el-table-column>
             <el-table-column
             align="right">
@@ -41,9 +44,9 @@
                     <el-form-item label="食物名">
                         <el-input v-model="addFood.foodName" placeholder="如：柠檬汁"></el-input>
                     </el-form-item>
-                    <el-form-item label="食物Id">
+                    <!-- <el-form-item label="食物Id">
                         <el-input v-model="addFood.foodId" placeholder="如：38" ></el-input>
-                    </el-form-item>
+                    </el-form-item> -->
                     <el-form-item label="食物No">
                         <el-input v-model="addFood.foodNo" placeholder="如：fooddrink5" ></el-input>
                     </el-form-item>
@@ -61,7 +64,7 @@
                         </el-select>
                     </el-form-item>
                 </el-form>
-                <el-button type="primary" @click="handleAddFood()">确定修改</el-button>
+                <el-button type="primary" @click="handleAddFood()">确定添加</el-button>
             </div>
         </el-dialog>
         <el-dialog title="修改食物信息" :visible.sync="dialogFormVisible" :modal-append-to-body='false'>
@@ -79,8 +82,10 @@
                     <el-form-item label="价格">
                         <el-input v-model="food.foodPrice"  ></el-input>
                     </el-form-item>
+                    <el-form-item label="价格">
+                        <el-input v-model="foodcategory.categoryName" placeholder="种类" :disabled="true" ></el-input>
+                    </el-form-item>
                     
-                    <el-input v-model="foodcategory.categoryName" placeholder="种类" :disabled="true" ></el-input>
                 </el-form>
                 <el-button type="primary" @click="handleeditFood()">确定修改</el-button>
             </div>
@@ -106,7 +111,6 @@ export default {
                     categoryName:undefined,
                     categoryNo:undefined,
                 },
-                foodId: undefined,
                 foodName: undefined,
                 foodNo: undefined,
                 foodPrice: undefined
@@ -133,23 +137,34 @@ export default {
             this.dialogAddFormVisible=true;
         },
         handleAddFood(){
-            IdCategory(this.addFood.categoryId).then((response)=>{
-                this.addFood.category.categoryId=response.data.categoryId;
-                this.addFood.category.categoryName=response.data.categoryName;
-                this.addFood.category.categoryNo=response.data.categoryNo;
-                
-            })
-            console.log(this.addFood)
-            addFood(this.addFood).then((response) => {
-                this.dialogAddFormVisible=false;
-                this.addFood.categoryId=undefined;
-                this.addFood.foodId=undefined;
-                this.addFood.foodName=undefined;
-                this.addFood.foodNo=undefined;
-                this.addFood.foodPrice=undefined;
-                console.log(this.foodList)
-            })
-            
+             if(this.addFood.categoryId==undefined||
+                this.addFood.foodName==undefined||
+                this.addFood.foodNo==undefined||
+                this.addFood.foodPrice==undefined
+                ){
+                this.$notify.error({
+                        title: '错误',
+                        message: '请填入信息'
+                    });
+            }
+            else{
+                IdCategory(this.addFood.categoryId).then((response)=>{
+                    this.addFood.category.categoryId=response.data.categoryId;
+                    this.addFood.category.categoryName=response.data.categoryName;
+                    this.addFood.category.categoryNo=response.data.categoryNo;
+                    
+                })
+                console.log(this.addFood)
+                addFood(this.addFood).then((response) => {
+                    this.dialogAddFormVisible=false;
+                    this.addFood.categoryId=undefined;
+                    this.addFood.foodName=undefined;
+                    this.addFood.foodNo=undefined;
+                    this.addFood.foodPrice=undefined;
+                    console.log(this.foodList)
+                    this.reload();
+                })
+            }
         },
         handleEdit(index, foodList) {
             this.food=foodList[index];
@@ -158,10 +173,18 @@ export default {
             
       },
       handleeditFood(){
-          exidFood(this.food).then((response) => {
-                this.food=response.data
-                this.dialogFormVisible=false;
-            })
+          if(this.food.foodName==""||this.food.foodPrice==""){
+                this.$notify.error({
+                        title: '错误',
+                        message: '请填入信息'
+                    });
+            }
+            else{
+                exidFood(this.food).then((response) => {
+                        
+                        this.dialogFormVisible=false;
+                    })
+            }
       },
      
     },

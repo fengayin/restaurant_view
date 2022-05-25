@@ -16,6 +16,30 @@ export function listStaff(query) {
     })
   }
 
+  // export function addStaff(staff,password,role) {
+  //   return request({
+  //     url: '/staff',
+  //     method: 'post',
+  //     data:staff,password,role
+  //   })
+  // }
+
+  
+  export function fineName(id) {
+    return request({
+      url: '/staff/fineName?id='+id,
+      method: 'get',
+    })
+  }
+
+  export function addStaff(query) {
+    return request({
+      url: '/staff',
+      method: 'post',
+      data:query
+    })
+  }
+
 
 
   

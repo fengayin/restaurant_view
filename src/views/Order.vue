@@ -348,7 +348,7 @@
 <script>
 import {listOrder,IdOrder,unSettledList} from "../api/order";
 
-import {listStaff} from "../api/staff";
+import {listStaff,fineName} from "../api/staff";
 import {payBill,ListBill} from "../api/bill";
 import {payCharge,ListCharge} from "../api/charge";
 export default {
@@ -465,14 +465,24 @@ export default {
             }
             else{
                 payCharge(this.charge.orderId,this.charge.chargeUnit,this.charge.chargeTel,this.user.id).then((response) => {
-                    this.charge.orderId=undefined;
+                    console.log(response.data.msg)
+                     if(response.data.msg == "请求/charge/payCharge被拒绝，没有权限访问！"){
+                    this.$notify.error({
+                        title: '错误',
+                        message: '无权限结账'
+                    });
+                    this.chargeFormVisible=false;
+                }
+                else{
+                   this.charge.orderId=undefined;
                     this.charge.orderNo=undefined;
                     this.charge.chargeUnit=undefined;
                     this.charge.chargeTel=undefined;
-                    this.charge.staffId=undefined;
                     this.charge.totalprice=undefined;
                     this.chargeFormVisible=false;
                     this.reload();
+                }
+                    
                 });
             }
         },
@@ -502,31 +512,46 @@ export default {
         handlecashpayment(){
             
             payBill(this.bill.orderId,this.bill.receipts,this.user.id).then((response) => {
-                this.AddCheckoutFormVisible=false;
-                this.bill.orderId=undefined;
-                this.bill.receipts=undefined;
-                this.reload();
+                console.log(response.data.msg)
+                if(response.data.msg == "请求/bill/payBill被拒绝，没有权限访问！"){
+                    this.$notify.error({
+                        title: '错误',
+                        message: '无权限结账'
+                    });
+                    this.AddCheckoutFormVisible=false;
+                }
+                else{
+                    this.AddCheckoutFormVisible=false;
+                    this.bill.orderId=undefined;
+                    this.bill.receipts=undefined;
+                    this.reload();
+                }
+                
             });
         },
         handlemobilepayment(){
-            if(this.bill.staffId==null){
-                this.$notify.error({
-                    title: '错误',
-                    message: '请输入员工号'
-                });
-            }
-            else{
+            
             this.AddCheckoutFormVisible=false;
             this.mobilepaymentVisible=true;
-            }
+            
         },
         Addmobilepayment(){
-            payBill(this.bill.orderId,this.bill.receipts,this.bill.staffId).then((response) => {
-                this.bill.orderId=undefined;
-                this.bill.receipts=undefined;
-                this.bill.staffId=undefined;
-                this.mobilepaymentVisible=false;
-                this.reload();
+            payBill(this.bill.orderId,this.bill.receipts,this.user.id).then((response) => {
+
+                if(response.data.msg == "请求/bill/payBill被拒绝，没有权限访问！"){
+                    this.$notify.error({
+                        title: '错误',
+                        message: '无权限结账'
+                    });
+                    this.AddCheckoutFormVisible=false;
+                }
+                else{
+                    this.bill.orderId=undefined;
+                     this.bill.receipts=undefined;
+                    this.mobilepaymentVisible=false;
+                    this.reload();
+                }
+                
             });
         },
         cancelCheckoutFormVisible(){
@@ -540,9 +565,8 @@ export default {
         },
         checkchargestaff(index,chargeList){
             const id=chargeList[index].staffId
-            
-            fineName(id).then((response) => {
-                
+            console.log(id)
+            fineName(id).then((response) => { 
                 this.staffname=response.data;
                 console.log(this.staffname)
                 this.CheckchargestaffVisible=true;

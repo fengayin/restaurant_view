@@ -56,8 +56,9 @@
                     <el-form-item label="年龄">
                         <el-input v-model ="staffobj.staffAge" placeholder="如：25"></el-input>
                     </el-form-item>
-                     <el-form-item label="性别">
-                        <el-input v-model="staffobj.staffSex" placeholder="如：女" ></el-input>
+                     <el-form-item label="性别" style="padding-right: 105px;width: 190px;">
+                        <el-radio v-model="staffobj.staffSex" label="男">男</el-radio>
+                        <el-radio v-model="staffobj.staffSex" label="女">女</el-radio>
                     </el-form-item>
                     <el-form-item label="身份证">
                         <el-input v-model="staffobj.satffIdnum" placeholder="如：201925716" ></el-input>
@@ -108,7 +109,7 @@
                         <el-input v-model="user.staffAge" placeholder="年龄"></el-input>
                     </el-form-item>
                      <el-form-item label="性别">
-                        <el-input v-model="user.staffSex" placeholder="性别" :disabled="true"></el-input>
+                        <el-input  v-model="user.staffSex" placeholder="性别" :disabled="true"></el-input>
                     </el-form-item>
                     <el-form-item label="身份证">
                         <el-input v-model="user.satffIdnum" placeholder="身份证" :disabled="true"></el-input>

@@ -54,7 +54,7 @@
                         <el-input v-model="staffobj.staffNo" placeholder="如：C03" ></el-input>
                     </el-form-item>
                     <el-form-item label="年龄">
-                        <el-input v-model ="staffobj.staffAge" placeholder="如：25"></el-input>
+                        <el-input v-model ="staffobj.staffAge" placeholder="如：25" @input="checknumber"></el-input>
                     </el-form-item>
                      <el-form-item label="性别" style="padding-right: 105px;width: 190px;">
                         <el-radio v-model="staffobj.staffSex" label="男">男</el-radio>
@@ -345,6 +345,11 @@ export default {
                 
             }
             
+        },
+        checknumber(e){
+            let value = e.replace(/^(0+)|[^\d]+/g,''); // 以0开头或者输入非数字，会被替换成空
+      value = value.replace(/(\d{3})\d*/, '$1') // 最多保留15位整数
+      this.staffobj.staffAge = value
         }
 
     },

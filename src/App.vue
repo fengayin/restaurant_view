@@ -25,6 +25,7 @@
               <span class="fonta" >东南西北中发白</span>
             </div> -->
             <span class="name">用户名：{{Staff.name}}</span>
+            <span class="role">角色：{{Staff.role}}</span>
             <el-button class="ubtton" @click="exit()">退出登录</el-button>
         </el-header>
         <el-main id="zhuye" style="
@@ -146,7 +147,10 @@ export default {
   width:100%;
 }
 .name{
-  margin-right:1100px;  
+  margin-right:30px;  
+}
+.role{
+  margin-right:1000px;  
 }
 
 .el-footer {

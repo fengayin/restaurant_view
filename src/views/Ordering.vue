@@ -1,7 +1,7 @@
 <template>
 
   <div class="table" :data="tableList" >
-    <!-- <div v-for="(table) in tableList" >
+    <div v-for="(table) in tableList" >
       <div class="tablecard">
         <el-col :span="6" >
           <el-card shadow="never"  >
@@ -26,8 +26,8 @@
           </el-card>
         </el-col>
       </div>
-    </div> -->
-    <div class="tablecard">
+    </div>
+    <!-- <div class="tablecard">
       <el-row :gutter="20">
       <el-col :span="6" >
       <el-card shadow="never">
@@ -270,7 +270,7 @@
       </el-card>
       </el-col>
       </el-row>
-    </div>
+    </div> -->
     <el-dialog title="请选择" :visible.sync="dialogFormVisible" :modal-append-to-body='false'>
       <el-form :model="tableOrderVo,queryParams"
           ref="queryForm">
@@ -380,76 +380,76 @@ import {createOrder , gettableOrderVo} from "../api/order";
       /** 查询桌子列表 */
       getList() {
         this.loading = true;
-        // var idList= [];
-        // var zhuangtai2=[]
-        // listTable(this.tableList).then((response) => {
-        //   this.tableList = response.data;
-        //   this.loading = false;
-        //   this.tableList.forEach((obj)=>{idList.push(obj.tableId)})
-        //   for(var key in idList){
-        //     gettableOrderVo(idList[key]).then((response) =>{
-        //       zhuangtai2.push((typeof response.data)=="object" ? false : true);
-        //       console.log(key)
-        //       console.log(response.data)
-        //       console.log(typeof response.data)
-        //     });
-        //   };
+        var idList= [];
+        var zhuangtai2=[]
+        listTable(this.tableList).then((response) => {
+          this.tableList = response.data;
+          this.loading = false;
+          this.tableList.forEach((obj)=>{idList.push(obj.tableId)})
+          for(var key in idList){
+            gettableOrderVo(idList[key]).then((response) =>{
+              zhuangtai2.push((typeof response.data)=="object" ? false : true);
+              console.log(key)
+              console.log(response.data)
+              console.log(this.tableList[key])
+            });
+          };
           
-        //   setTimeout(() => {
-        //     console.log(zhuangtai2)
-        //     for(var i in zhuangtai2){
-        //       this.tableList[i].state=zhuangtai2[i]
-        //     }
-        //   }, 1200);
-        //   setTimeout( ()=> {
-        //     this.$forceUpdate();
-        //   }, 2000)
+          setTimeout(() => {
+            console.log(zhuangtai2)
+            for(var i in zhuangtai2){
+              this.tableList[i].state=zhuangtai2[i]
+            }
+          }, 800);
+          setTimeout( ()=> {
+            this.$forceUpdate();
+          }, 1000)
         
-        // });
-        // listStaff(this.queryParams).then((response) => {
-        //   this.staffList = response.data;
-        //   this.loading = false;
-        // });
-          listTable(this.tableList).then((response) => {
-            this.tableList = response.data;
-            this.loading = false;
-          });
-          gettableOrderVo(1).then((response) =>{
-              this.istableVO1= ((typeof response.data)=="object" ? false : true)
-          });
-           gettableOrderVo(2).then((response) =>{
-            this.istableVO2=((typeof response.data)=="object" ? false : true)
-          });
-          gettableOrderVo(3).then((response) =>{
-            this.istableVO3=((typeof response.data)=="object" ? false : true)
-          });
-           gettableOrderVo(4).then((response) =>{
-            this.istableVO4=((typeof response.data)=="object" ? false : true)
-          });
-          gettableOrderVo(5).then((response) =>{
-            this.istableVO5=((typeof response.data)=="object" ? false : true)
-          });
-          gettableOrderVo(6).then((response) =>{
-            this.istableVO6=((typeof response.data)=="object" ? false : true)
-          });
-          gettableOrderVo(7).then((response) =>{
-            this.istableVO7=((typeof response.data)=="object" ? false : true)
-          });
-          gettableOrderVo(8).then((response) =>{
-            this.istableVO8=((typeof response.data)=="object" ? false : true)
-          });
-          gettableOrderVo(9).then((response) =>{
-            this.istableVO9=((typeof response.data)=="object" ? false : true)
-          });
-          gettableOrderVo(10).then((response) =>{
-            this.istableVO10=((typeof response.data)=="object" ? false : true)
-          });
-          gettableOrderVo(11).then((response) =>{
-            this.istableVO11=((typeof response.data)=="object" ? false : true)
-          });
-          gettableOrderVo(12).then((response) =>{
-            this.istableVO12=(typeof response.data)=="object" ? false : true
-          });
+        });
+        listStaff(this.queryParams).then((response) => {
+          this.staffList = response.data;
+          this.loading = false;
+        });
+          // listTable(this.tableList).then((response) => {
+          //   this.tableList = response.data;
+          //   this.loading = false;
+          // });
+          // gettableOrderVo(1).then((response) =>{
+          //     this.istableVO1= ((typeof response.data)=="object" ? false : true)
+          // });
+          //  gettableOrderVo(2).then((response) =>{
+          //   this.istableVO2=((typeof response.data)=="object" ? false : true)
+          // });
+          // gettableOrderVo(3).then((response) =>{
+          //   this.istableVO3=((typeof response.data)=="object" ? false : true)
+          // });
+          //  gettableOrderVo(4).then((response) =>{
+          //   this.istableVO4=((typeof response.data)=="object" ? false : true)
+          // });
+          // gettableOrderVo(5).then((response) =>{
+          //   this.istableVO5=((typeof response.data)=="object" ? false : true)
+          // });
+          // gettableOrderVo(6).then((response) =>{
+          //   this.istableVO6=((typeof response.data)=="object" ? false : true)
+          // });
+          // gettableOrderVo(7).then((response) =>{
+          //   this.istableVO7=((typeof response.data)=="object" ? false : true)
+          // });
+          // gettableOrderVo(8).then((response) =>{
+          //   this.istableVO8=((typeof response.data)=="object" ? false : true)
+          // });
+          // gettableOrderVo(9).then((response) =>{
+          //   this.istableVO9=((typeof response.data)=="object" ? false : true)
+          // });
+          // gettableOrderVo(10).then((response) =>{
+          //   this.istableVO10=((typeof response.data)=="object" ? false : true)
+          // });
+          // gettableOrderVo(11).then((response) =>{
+          //   this.istableVO11=((typeof response.data)=="object" ? false : true)
+          // });
+          // gettableOrderVo(12).then((response) =>{
+          //   this.istableVO12=(typeof response.data)=="object" ? false : true
+          // });
 
       }, 
       handleAddTable(val){
@@ -507,6 +507,10 @@ import {createOrder , gettableOrderVo} from "../api/order";
     }
   .table{
     margin:0 auto;
+  }
+  img{
+    width: 100px; 
+     height: 100px;
   }
   .img1 {
      width: 100px; 
